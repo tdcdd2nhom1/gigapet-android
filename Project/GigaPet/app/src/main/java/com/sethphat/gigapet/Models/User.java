@@ -9,6 +9,7 @@ public class User {
     private int ID;
     private String PetName;
     private int Gold;
+    private int BackgroundIMG = 0;
 
     /** PET INFORMATION
      * 1 => DOG
@@ -152,5 +153,13 @@ public class User {
 
     public void setLastTime(int lastTime) {
         LastTime = lastTime;
+    }
+
+    public int getBackgroundIMG() {
+        return BackgroundIMG;
+    }
+
+    public void setBackgroundIMG(int backgroundIMG) {
+        BackgroundIMG = backgroundIMG;
     }
 }

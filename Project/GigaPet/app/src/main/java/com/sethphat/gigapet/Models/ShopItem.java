@@ -5,10 +5,11 @@ package com.sethphat.gigapet.Models;
  */
 
 public class ShopItem {
-    public int ID;
-    public String Name;
-    public String Description;
-    public int Price;
+    private int ID;
+    private String Name;
+    private String Description;
+    private int Price;
+    private int BackgroundIMG = 0; // if != 0 => this is Background
 
     public ShopItem(int ID, String name, String description, int price) {
         this.ID = ID;
@@ -47,5 +48,13 @@ public class ShopItem {
 
     public void setPrice(int price) {
         Price = price;
+    }
+
+    public int getBackgroundIMG() {
+        return BackgroundIMG;
+    }
+
+    public void setBackgroundIMG(int backgroundIMG) {
+        BackgroundIMG = backgroundIMG;
     }
 }
