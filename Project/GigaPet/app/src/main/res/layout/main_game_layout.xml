@@ -13,73 +13,80 @@
         android:layout_height="0dp"
         android:layout_weight="7">
 
-        <ImageView
+        <ImageButton
+            android:layout_margin="@dimen/sideIMGMargin"
             android:id="@+id/imgInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/settingSize"
+            android:layout_height="@dimen/settingSize"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:tint="@color/colorAccent"
-            android:src="@drawable/ic_info_black_36dp" />
+            android:background="@drawable/ico_info" />
 
-        <ImageView
+        <ImageButton
+            android:layout_margin="@dimen/sideIMGMargin"
             android:id="@+id/imgSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/settingSize"
+            android:layout_height="@dimen/settingSize"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:tint="@color/colorAccent"
-            android:src="@drawable/ic_settings_black_36dp" />
+            android:background="@drawable/ico_setting" />
 
         <!-- Button player left -->
-        <Button
+        <ImageButton
+            android:layout_margin="@dimen/sideIMGMargin"
             android:id="@+id/btnShop"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/imgInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SHOP"/>
+            android:layout_width="@dimen/sideIMGSize"
+            android:layout_height="@dimen/sideIMGSize"
+            android:background="@drawable/ico_cart_2"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnWC"
+            android:layout_margin="@dimen/sideIMGMargin"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/btnShop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WC"/>
+            android:layout_width="@dimen/sideIMGSize"
+            android:layout_height="@dimen/sideIMGSize"
+            android:background="@drawable/ico_toilet"/>
 
-        <Button
+        <ImageButton
+            android:layout_margin="@dimen/sideIMGMargin"
+            android:id="@+id/btnShower"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/btnWC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SHOWER"/>
+            android:layout_width="@dimen/sideIMGSize"
+            android:layout_height="@dimen/sideIMGSize"
+            android:background="@drawable/ico_shower" />
 
 
         <!-- Button player right -->
-        <Button
+        <ImageButton
             android:id="@+id/btnGoOut"
+            android:layout_margin="@dimen/sideIMGMargin"
             android:layout_alignParentRight="true"
             android:layout_below="@id/imgSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go Out"/>
+            android:layout_width="@dimen/sideIMGSize"
+            android:layout_height="@dimen/sideIMGSize"
+            android:background="@drawable/ico_park"/>
 
-        <Button
+        <ImageButton
+            android:layout_margin="@dimen/sideIMGMargin"
             android:id="@+id/btnEat"
             android:layout_alignParentRight="true"
             android:layout_below="@id/btnGoOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EAT"/>
+            android:layout_width="@dimen/sideIMGSize"
+            android:layout_height="@dimen/sideIMGSize"
+            android:background="@drawable/ico_food"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnDrink"
+            android:layout_margin="@dimen/sideIMGMargin"
             android:layout_alignParentRight="true"
             android:layout_below="@id/btnEat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DRINK"/>
+            android:layout_width="@dimen/sideIMGSize"
+            android:layout_height="@dimen/sideIMGSize"
+            android:background="@drawable/ico_drink"/>
 
         <!-- PET Info -->
 
@@ -94,11 +101,41 @@
             android:text="Chú Võ"/>
 
         <ImageView
+            android:id="@+id/imgPet"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:layout_width="@dimen/petSize"
             android:layout_height="@dimen/petSize"
             android:src="@drawable/dog_sprite" />
+
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgGold"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gold-panel"/>
+
+            <TextView
+                android:id="@+id/myImageViewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/imgGold"
+                android:layout_alignTop="@id/imgGold"
+                android:layout_alignRight="@id/imgGold"
+                android:layout_alignBottom="@id/imgGold"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:text="Hello"
+                android:textColor="#000000" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_alignParentBottom="true"

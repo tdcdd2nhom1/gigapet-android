@@ -23,6 +23,7 @@
 
     <style name="PetName">
         <item name="android:background">#f368e0</item>
+        <item name="android:textColor">#fff</item>
         <item name="android:padding">10dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>

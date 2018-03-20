@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="petSize">200dp</dimen>
+
+    <dimen name="settingSize">40dp</dimen>
+    <dimen name="sideIMGSize">50dp</dimen>
+    <dimen name="sideIMGMargin">5dp</dimen>
 </resources>
