@@ -109,9 +109,10 @@
             android:src="@drawable/dog_sprite" />
 
         <RelativeLayout
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="10dp"
+            android:id="@+id/rlGold"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/imgSetting"
+            android:layout_marginTop="@dimen/sideIMGMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -119,9 +120,9 @@
                 android:id="@+id/imgGold"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gold-panel"/>
+                android:layout_width="@dimen/goldBannerWidth"
+                android:layout_height="@dimen/goldBannerHeight"
+                android:background="@drawable/gold_panel"/>
 
             <TextView
                 android:id="@+id/myImageViewText"
@@ -131,10 +132,11 @@
                 android:layout_alignTop="@id/imgGold"
                 android:layout_alignRight="@id/imgGold"
                 android:layout_alignBottom="@id/imgGold"
-                android:layout_margin="1dp"
+                android:layout_margin="8dp"
+                android:paddingLeft="5dp"
                 android:gravity="center"
-                android:text="Hello"
-                android:textColor="#000000" />
+                android:text="99999"
+                android:textColor="#fff" />
         </RelativeLayout>
 
         <LinearLayout

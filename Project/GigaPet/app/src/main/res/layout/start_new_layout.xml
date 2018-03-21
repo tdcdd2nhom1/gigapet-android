@@ -1,9 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.sethphat.gigapet.StartNewActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="#fcd4dc"
+tools:context="com.sethphat.gigapet.ContinueActivity">
 
-</android.support.constraint.ConstraintLayout>
+<TextView
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/StartNewHelp"
+    android:textAlignment="center"
+    android:textSize="@dimen/continue_font_size"
+    android:textStyle="bold"
+    />
+
+<EditText
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#000000"
+    android:hint="PET NAME"
+    android:textAlignment="center"
+    android:background="@drawable/rounded_corner_input"
+    />
+
+<RelativeLayout
+    android:id="@+id/rlChoosePet"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <!-- Swipe -->
+    <ImageButton
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/sideIMGSize"
+        android:layout_height="@dimen/sideIMGSize"
+        android:background="@drawable/back_arrow"/>
+    <ImageButton
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/sideIMGSize"
+        android:layout_height="@dimen/sideIMGSize"
+        android:background="@drawable/right_arrow"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ChoosePet"
+        android:textSize="@dimen/common_font_size"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/imgPet"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/petSize"
+        android:layout_height="@dimen/petSize"
+        android:src="@drawable/dog_sprite"/>
+
+</RelativeLayout>
+
+<Button
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/start_now"
+    android:textColor="#fff"
+    android:background="@drawable/rounded_corner"
+    />
+</LinearLayout>

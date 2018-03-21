@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">GigaPet</string>
+    <string name="OpenSaveHelp">CONTINUE</string>
+    <string name="StartNewHelp">START NEW GAME</string>
+    <string name="ChoosePet">CHOOSE YOUR PET</string>
 
 
     <!-- Pet status -->
@@ -9,4 +12,9 @@
     <string name="hygiene">Hygiene</string>
     <string name="fun">Fun</string>
     <string name="energy">Energy</string>
+
+    <!-- Button -->
+    <string name="start_now">START NOW!!</string>
+    <string name="choose_now">CHOOSE PET</string>
+
 </resources>
