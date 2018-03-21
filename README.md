@@ -4,7 +4,7 @@ Android Java - Giga Pet game
 ## Team members:
 1. Phat Tran Minh https://github.com/sethsandaru
 2. Vu Nguyen Hoang
-3. Long Le Bao
+3. ~~Long Le Bao-~~
 4. Huong Nguyen Thi Thanh
 5. Tho Nguyen
 
