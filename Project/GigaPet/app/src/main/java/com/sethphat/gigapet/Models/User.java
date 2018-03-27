@@ -9,7 +9,7 @@ public class User {
     private int ID;
     private String PetName;
     private int Gold;
-    private int BackgroundIMG = 0;
+    private int BackgroundIMG = 0; // default background
 
     /** PET INFORMATION
      * 1 => DOG
@@ -17,15 +17,17 @@ public class User {
      * 3 => HAMSTER
      */
     private int Type;
+    private int Evolution;
     private int Heart;
     private int Experience;
+    private int PetSkin;
 
     // PET Status
     private int Hunger;
     private int Thirsty;
     private int Fun;
     private int Hygiene;
-    private int Enegy;
+    private int Energy;
     private int Bladder;
 
     // Play status
@@ -35,18 +37,21 @@ public class User {
 
     }
 
-    public User(int ID, String petName, int gold, int type, int heart, int experience, int hunger, int thirsty, int fun, int hygiene, int enegy, int bladder, int lastTime) {
+    public User(int ID, String petName, int gold, int backgroundIMG, int type, int evolution, int heart, int experience, int petSkin, int hunger, int thirsty, int fun, int hygiene, int energy, int bladder, int lastTime) {
         this.ID = ID;
         PetName = petName;
         Gold = gold;
+        BackgroundIMG = backgroundIMG;
         Type = type;
+        Evolution = evolution;
         Heart = heart;
         Experience = experience;
+        PetSkin = petSkin;
         Hunger = hunger;
         Thirsty = thirsty;
         Fun = fun;
         Hygiene = hygiene;
-        Enegy = enegy;
+        Energy = energy;
         Bladder = bladder;
         LastTime = lastTime;
     }
@@ -131,12 +136,12 @@ public class User {
         Hygiene = hygiene;
     }
 
-    public int getEnegy() {
-        return Enegy;
+    public int getEnergy() {
+        return Energy;
     }
 
-    public void setEnegy(int enegy) {
-        Enegy = enegy;
+    public void setEnergy(int energy) {
+        Energy = energy;
     }
 
     public int getBladder() {
@@ -161,5 +166,21 @@ public class User {
 
     public void setBackgroundIMG(int backgroundIMG) {
         BackgroundIMG = backgroundIMG;
+    }
+
+    public int getPetSkin() {
+        return PetSkin;
+    }
+
+    public void setPetSkin(int petSkin) {
+        PetSkin = petSkin;
+    }
+
+    public int getEvolution() {
+        return Evolution;
+    }
+
+    public void setEvolution(int evolution) {
+        Evolution = evolution;
     }
 }

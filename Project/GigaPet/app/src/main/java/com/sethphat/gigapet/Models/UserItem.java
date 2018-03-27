@@ -5,25 +5,25 @@ package com.sethphat.gigapet.Models;
  */
 
 public class UserItem {
-    private int ID;
+    private int UserID;
     private int ShopItemID;
     private int Quantity;
 
     // use for foreign
     private ShopItem Item = null;
 
-    public UserItem(int ID, int shopItemID, int quantity) {
-        this.ID = ID;
+    public UserItem(int userID, int shopItemID, int quantity) {
+        this.UserID = userID;
         ShopItemID = shopItemID;
         Quantity = quantity;
     }
 
     public int getID() {
-        return ID;
+        return UserID;
     }
 
     public void setID(int ID) {
-        this.ID = ID;
+        this.UserID = ID;
     }
 
     public int getShopItemID() {

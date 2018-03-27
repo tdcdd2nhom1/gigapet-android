@@ -10,12 +10,14 @@ public class ShopItem {
     private String Description;
     private int Price;
     private int BackgroundIMG = 0; // if != 0 => this is Background
+    private int TypePet = 0; // if 0 => anyone can use
 
-    public ShopItem(int ID, String name, String description, int price) {
+    public ShopItem(int ID, String name, String description, int price, int type) {
         this.ID = ID;
         Name = name;
         Description = description;
         Price = price;
+        TypePet = type;
     }
 
     public int getID() {
@@ -56,5 +58,13 @@ public class ShopItem {
 
     public void setBackgroundIMG(int backgroundIMG) {
         BackgroundIMG = backgroundIMG;
+    }
+
+    public int getTypePet() {
+        return TypePet;
+    }
+
+    public void setTypePet(int typePet) {
+        TypePet = typePet;
     }
 }
