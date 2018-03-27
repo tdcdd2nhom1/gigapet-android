@@ -7,9 +7,9 @@ package com.sethphat.gigapet.Models;
 public class Category {
     private int ID;
     private String Name;
-    private int TotalItems;
+    private long TotalItems;
 
-    public Category(int ID, String name, int totalItems) {
+    public Category(int ID, String name, long totalItems) {
         this.ID = ID;
         Name = name;
         TotalItems = totalItems;
@@ -31,11 +31,11 @@ public class Category {
         Name = name;
     }
 
-    public int getTotalItems() {
+    public long getTotalItems() {
         return TotalItems;
     }
 
-    public void setTotalItems(int totalItems) {
+    public void setTotalItems(long totalItems) {
         TotalItems = totalItems;
     }
 }

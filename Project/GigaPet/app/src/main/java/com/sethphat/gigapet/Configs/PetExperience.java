@@ -26,10 +26,30 @@ public class PetExperience {
      */
     public static boolean isUpLevel(int nowLevel, int nowExp)
     {
+        if (nowLevel == 10)
+            return false;
+
         for (int i = 0; i < EXP.length; i++)
         {
             int level = i + 1;
-            if (nowLevel == level && nowExp >= EXP[i])
+            if (nowLevel == level && nowExp >= EXP[i+1])
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean isDownLevel(int nowLevel, int nowExp)
+    {
+        if (nowLevel == 1)
+            return false;
+
+        for (int i = EXP.length - 1; i >= 0; i--)
+        {
+            int level = i + 1;
+            if (nowLevel == level && nowExp <= EXP[i - 1])
             {
                 return true;
             }

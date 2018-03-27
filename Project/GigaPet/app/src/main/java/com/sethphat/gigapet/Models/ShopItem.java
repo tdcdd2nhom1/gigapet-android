@@ -6,18 +6,21 @@ package com.sethphat.gigapet.Models;
 
 public class ShopItem {
     private int ID;
+    private int CategoryID;
     private String Name;
     private String Description;
     private int Price;
     private int BackgroundIMG = 0; // if != 0 => this is Background
     private int TypePet = 0; // if 0 => anyone can use
 
-    public ShopItem(int ID, String name, String description, int price, int type) {
+    public ShopItem(int ID, int categoryID, String name, String description, int price, int backgroundIMG, int typePet) {
         this.ID = ID;
+        CategoryID = categoryID;
         Name = name;
         Description = description;
         Price = price;
-        TypePet = type;
+        BackgroundIMG = backgroundIMG;
+        TypePet = typePet;
     }
 
     public int getID() {
@@ -26,6 +29,14 @@ public class ShopItem {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public int getCategoryID() {
+        return CategoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        CategoryID = categoryID;
     }
 
     public String getName() {
