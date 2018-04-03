@@ -2,6 +2,7 @@ package com.sethphat.gigapet;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 public class ContinueActivity extends AppCompatActivity {
 
@@ -10,4 +11,5 @@ public class ContinueActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.continue_layout);
     }
+
 }

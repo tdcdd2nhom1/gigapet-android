@@ -8,6 +8,10 @@
     <dimen name="goldBannerWidth">100dp</dimen>
     <dimen name="goldBannerHeight">30dp</dimen>
 
+    <dimen name="btn_home_page_width">200dp</dimen>
+    <dimen name="btn_home_page_heigth">60dp</dimen>
+
+    <dimen name="home_page_btns_margin">50dp</dimen>
 
     <!-- font size -->
     <dimen name="continue_font_size">20sp</dimen>

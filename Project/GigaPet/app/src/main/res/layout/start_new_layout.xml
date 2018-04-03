@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#fcd4dc"
-    tools:context="com.sethphat.gigapet.ContinueActivity">
+    tools:context="com.sethphat.gigapet.StartNewActivity">
 
 <TextView
     android:padding="10dp"
@@ -20,6 +20,7 @@
     />
 
 <EditText
+    android:id="@+id/edtName"
     android:layout_margin="10dp"
     android:padding="10dp"
     android:layout_width="match_parent"
@@ -75,5 +76,6 @@
     android:text="@string/start_now"
     android:textColor="#fff"
     android:background="@drawable/rounded_corner"
+    android:onClick="startNewGame"
     />
 </LinearLayout>
