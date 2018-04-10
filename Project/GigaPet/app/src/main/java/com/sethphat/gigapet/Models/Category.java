@@ -7,12 +7,14 @@ package com.sethphat.gigapet.Models;
 public class Category {
     private int ID;
     private String Name;
+    private String Image;
     private long TotalItems;
 
-    public Category(int ID, String name, long totalItems) {
+    public Category(int ID, String name, long totalItems, String img) {
         this.ID = ID;
         Name = name;
         TotalItems = totalItems;
+        Image = img;
     }
 
     public int getID() {
@@ -37,5 +39,13 @@ public class Category {
 
     public void setTotalItems(long totalItems) {
         TotalItems = totalItems;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
     }
 }

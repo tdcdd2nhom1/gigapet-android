@@ -22,6 +22,7 @@ public class CategoryHelper extends DBHelper implements QueryTemplate<Category> 
     // column
     protected static String CL_ID = "ID";
     protected static String CL_Name = "Name";
+    protected static String CL_Image = "Image";
 
     public CategoryHelper(Context context) {
         super(context);
@@ -46,6 +47,7 @@ public class CategoryHelper extends DBHelper implements QueryTemplate<Category> 
         // set content
         ContentValues values = new ContentValues();
         values.put(CL_Name, info.getName());
+        values.put(CL_Image, info.getImage());
 
         // update
         db.update(TABLE_NAME, values, CL_ID + " = ?", new String[] {Integer.toString(info.getID())});
@@ -72,7 +74,8 @@ public class CategoryHelper extends DBHelper implements QueryTemplate<Category> 
                 // get data and create obj
                 int id = qr.getInt(qr.getColumnIndex(CL_ID));
                 String name = qr.getString(qr.getColumnIndex(CL_Name));
-                Category cate = new Category(id, name, ShopItemHelper.countAllInCategory(db, id));
+                String image = qr.getString(qr.getColumnIndex(CL_Image));
+                Category cate = new Category(id, name, ShopItemHelper.countAllInCategory(db, id), image);
 
                 // add arr
                 allCates.add(cate);
@@ -94,7 +97,8 @@ public class CategoryHelper extends DBHelper implements QueryTemplate<Category> 
         if (qr.moveToFirst())
         {
             String name = qr.getString(qr.getColumnIndex(CL_Name));
-            cate = new Category(id, name, 0);
+            String image = qr.getString(qr.getColumnIndex(CL_Image));
+            cate = new Category(id, name, ShopItemHelper.countAllInCategory(db, id), image);
         }
 
         qr.close();

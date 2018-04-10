@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.sethphat.gigapet.Common.FontChangeCrawler;
 import com.sethphat.gigapet.Common.HelperFunction;
 import com.sethphat.gigapet.Common.OnSwipeTouchListener;
+import com.sethphat.gigapet.Configs.IntentKey;
 import com.sethphat.gigapet.Configs.Setting;
 import com.sethphat.gigapet.Models.User;
 import com.sethphat.gigapet.SQLHelper.UserHelper;
@@ -36,7 +37,7 @@ public class StartNewActivity extends AppCompatActivity {
         setContentView(R.layout.start_new_layout);
 
         // set font
-        FontChangeCrawler fontChanger = new FontChangeCrawler(getAssets(), "fonts/carterone.ttf");
+        FontChangeCrawler fontChanger = new FontChangeCrawler(getAssets(), Setting.Font_Path);
         fontChanger.replaceFonts((ViewGroup) this.findViewById(android.R.id.content));
 
         // Get main
@@ -114,13 +115,14 @@ public class StartNewActivity extends AppCompatActivity {
         obj.setType(now_pet);
 
         // insert
-        //UserHelper userRepo = new UserHelper(this);
+        UserHelper userRepo = new UserHelper(this);
+        userRepo.Insert(obj);
 
 
         // open page
         if (obj.getID() > 0) {
             Intent i = new Intent(StartNewActivity.this, MainGameActivity.class);
-            i.putExtra("USER_ID", obj.getID());
+            i.putExtra(IntentKey.USER_ID, obj.getID());
             startActivity(i);
         }
         else {

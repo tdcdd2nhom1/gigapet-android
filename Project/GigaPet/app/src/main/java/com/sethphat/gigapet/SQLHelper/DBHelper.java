@@ -49,7 +49,8 @@ public abstract class DBHelper extends SQLiteOpenHelper {
         // CREATE Table Category
         String create_category_table = "CREATE TABLE " + CategoryHelper.TABLE_NAME + "(" +
                                             CategoryHelper.CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                            CategoryHelper.CL_Name+ " TEXT" +
+                                            CategoryHelper.CL_Name+ " TEXT," +
+                                            CategoryHelper.CL_Image+ " TEXT" +
                                         ")";
 
         db.execSQL(create_category_table);
@@ -61,7 +62,8 @@ public abstract class DBHelper extends SQLiteOpenHelper {
                                             ShopItemHelper.CL_Description + " TEXT," +
                                             ShopItemHelper.CL_Price + " INTEGER DEFAULT 0," +
                                             ShopItemHelper.CL_BackgroundIMG + " INTEGER DEFAULT 0," +
-                                            ShopItemHelper.CL_TypePet + " INTEGER DEFAULT 0" +
+                                            ShopItemHelper.CL_TypePet + " INTEGER DEFAULT 0," +
+                                            ShopItemHelper.CL_Image+ " TEXT" +
                                         ")";
 
         db.execSQL(create_shopitem_table);

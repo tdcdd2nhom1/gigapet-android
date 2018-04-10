@@ -26,6 +26,7 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
     protected static String CL_Price = "Price";
     protected static String CL_BackgroundIMG = "BackgroundIMG";
     protected static String CL_TypePet = "TypePet";
+    protected static String CL_Image = "Image";
 
     public ShopItemHelper(Context context) {
         super(context);

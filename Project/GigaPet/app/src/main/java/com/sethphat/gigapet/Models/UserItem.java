@@ -18,14 +18,6 @@ public class UserItem {
         Quantity = quantity;
     }
 
-    public int getID() {
-        return UserID;
-    }
-
-    public void setID(int ID) {
-        this.UserID = ID;
-    }
-
     public int getShopItemID() {
         return ShopItemID;
     }
@@ -48,5 +40,13 @@ public class UserItem {
 
     public void setQuantity(int quantity) {
         Quantity = quantity;
+    }
+
+    public int getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(int userID) {
+        UserID = userID;
     }
 }
