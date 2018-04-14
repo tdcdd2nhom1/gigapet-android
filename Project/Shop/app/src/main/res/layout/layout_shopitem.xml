@@ -19,9 +19,9 @@
 
             <ImageView
                 android:id="@+id/imgIcon"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/imgSize"
+                android:layout_gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -35,7 +35,7 @@
             android:layout_weight="4">
 
             <TextView
-                android:id="@+id/tvname"
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/fs"
@@ -48,13 +48,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1.5">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btnGo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical" />
+                android:layout_width="@dimen/btnSize"
+                android:layout_height="@dimen/btnSize"
+                android:background="@drawable/rightarrow"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
 

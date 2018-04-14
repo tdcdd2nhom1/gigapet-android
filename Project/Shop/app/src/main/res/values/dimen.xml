@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="topsize">35sp</dimen>
+    <dimen name="topSize">35sp</dimen>
     <dimen name="itemSize">25sp</dimen>
+
+    <dimen name="btnSize">50sp</dimen>
+    <dimen name="imgSize">100sp</dimen>
 </resources>
