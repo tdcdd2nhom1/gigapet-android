@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home"
+    tools:context="com.sethphat.gigapet.HomePageActivity">
+
+    <ImageButton
+        android:layout_margin="@dimen/sideIMGMargin"
+        android:id="@+id/imgInfo"
+        android:layout_width="@dimen/settingSize"
+        android:layout_height="@dimen/settingSize"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/ico_info"
+        android:onClick="showInfo"/>
+
+    <ImageButton
+        android:layout_margin="@dimen/sideIMGMargin"
+        android:id="@+id/imgSetting"
+        android:layout_width="@dimen/settingSize"
+        android:layout_height="@dimen/settingSize"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ico_setting"
+        android:onClick="showSetting"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/home_page_btns_margin"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:layout_width="@dimen/btn_home_page_width"
+            android:layout_height="@dimen/btn_home_page_heigth"
+            android:src="@drawable/selector_start_game"
+            android:scaleType="fitCenter"
+            android:onClick="startGame"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:layout_width="@dimen/btn_home_page_width"
+            android:layout_height="@dimen/btn_home_page_heigth"
+            android:src="@drawable/selector_continue"
+            android:scaleType="fitCenter"
+            android:onClick="continueGame"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:layout_width="@dimen/btn_home_page_width"
+            android:layout_height="@dimen/btn_home_page_heigth"
+            android:src="@drawable/selector_help"
+            android:scaleType="fitCenter"
+            android:onClick="showHelp"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+</RelativeLayout>

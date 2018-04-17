@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableRow>
+        <TextView
+            android:textSize="@dimen/common_font_size"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/sound"
+            android:layout_column="1"
+            android:layout_weight="2"/>
+        <RadioGroup
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_column="2"
+            android:layout_weight="8">
+            <RadioButton
+                android:id="@+id/rdbOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/on"/>
+            <RadioButton
+                android:id="@+id/rdbOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/off"/>
+        </RadioGroup>
+    </TableRow>
+</TableLayout>
