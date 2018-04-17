@@ -39,6 +39,7 @@
             android:layout_below="@id/imgInfo"
             android:layout_width="@dimen/sideIMGSize"
             android:layout_height="@dimen/sideIMGSize"
+            android:onClick="shopPage"
             android:background="@drawable/ico_cart_2"/>
 
         <ImageButton
@@ -98,7 +99,7 @@
             android:layout_height="wrap_content"
             style="@style/PetName"
             android:background="@drawable/rounded_corner"
-            android:text="Chú Võ"/>
+            android:text="Vũ đẹp trai"/>
 
         <ImageView
             android:id="@+id/imgPet"
