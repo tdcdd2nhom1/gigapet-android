@@ -8,5 +8,34 @@
     style="@style/BackgroundHome"
     tools:context="com.sethphat.gigapet.SplashActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+        <ImageView
+            android:id="@+id/imgGif1"
+            android:layout_width="@dimen/img_gifload_width"
+            android:layout_height="@dimen/img_gifload_height" />
+        <ImageView
+            android:id="@+id/imgGif2"
+            android:layout_width="@dimen/img_gifload_width"
+            android:layout_height="@dimen/img_gifload_height" />
+        <ImageView
+            android:id="@+id/imgGif3"
+            android:layout_width="@dimen/img_gifload_width"
+            android:layout_height="@dimen/img_gifload_height" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

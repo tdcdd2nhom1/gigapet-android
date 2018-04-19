@@ -39,40 +39,31 @@
                 android:gravity="center_vertical"
                 android:text="@string/shop"
                 android:textColor="@color/colorShop"
-                android:textSize="@dimen/btn_back_screen_size" />
+                android:textSize="@dimen/Shop_size" />
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlGold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/sideIMGMargin"
-            android:layout_toLeftOf="@id/imgSetting">
-
-            <ImageView
-                android:id="@+id/imgGold"
-                android:layout_width="@dimen/goldBannerWidth"
-                android:layout_height="@dimen/goldBannerHeight"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/gold_panel" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
 
             <TextView
-                android:id="@+id/myImageViewText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/imgGold"
-                android:layout_alignLeft="@id/imgGold"
-                android:layout_alignRight="@id/imgGold"
-                android:layout_alignTop="@id/imgGold"
-                android:layout_margin="8dp"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:text="99999"
-                android:textColor="#fff" />
-        </RelativeLayout>
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="9999"
+                android:textColor="@color/colorMoney"
+                android:textSize="@dimen/money_size" />
+
+            <ImageView
+                android:layout_width="@dimen/img_money_width"
+                android:layout_height="@dimen/img_money_height"
+                android:background="@drawable/piggybank"
+                android:gravity="center_vertical|end" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
