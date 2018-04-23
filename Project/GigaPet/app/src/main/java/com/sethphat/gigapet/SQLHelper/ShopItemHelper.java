@@ -27,6 +27,8 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
     protected static String CL_BackgroundIMG = "BackgroundIMG";
     protected static String CL_TypePet = "TypePet";
     protected static String CL_Image = "Image";
+    protected static String CL_Evolution = "Evolution";
+    protected static String CL_Recover = "Recover";
 
     public ShopItemHelper(Context context) {
         super(context);
@@ -43,6 +45,8 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
         values.put(CL_Price, info.getPrice());
         values.put(CL_BackgroundIMG, info.getBackgroundIMG());
         values.put(CL_TypePet, info.getTypePet());
+        values.put(CL_Evolution, info.getEvolution());
+        values.put(CL_Recover, info.getRecover());
 
         db.insert(TABLE_NAME, null, values);
     }
@@ -57,6 +61,8 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
         values.put(CL_Price, info.getPrice());
         values.put(CL_BackgroundIMG, info.getBackgroundIMG());
         values.put(CL_TypePet, info.getTypePet());
+        values.put(CL_Evolution, info.getEvolution());
+        values.put(CL_Recover, info.getRecover());
 
         db.update(TABLE_NAME, values, CL_ID + " = ?", new String[] {Integer.toString(info.getID())});
     }
@@ -85,9 +91,11 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
                 int price = qr.getInt(qr.getColumnIndex(CL_Price));
                 int typePet = qr.getInt(qr.getColumnIndex(CL_TypePet));
                 int background = qr.getInt(qr.getColumnIndex(CL_BackgroundIMG));
+                int evolution = qr.getInt(qr.getColumnIndex(CL_Evolution));
+                int recover = qr.getInt(qr.getColumnIndex(CL_Recover));
 
                 // new obj
-                ShopItem item = new ShopItem(id, cate_id, name, desc, price, background, typePet);
+                ShopItem item = new ShopItem(id, cate_id, name, desc, price, background, typePet, evolution, recover);
                 arrItems.add(item);
             }
             while (qr.moveToNext());
@@ -113,9 +121,11 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
             int price = qr.getInt(qr.getColumnIndex(CL_Price));
             int typePet = qr.getInt(qr.getColumnIndex(CL_TypePet));
             int background = qr.getInt(qr.getColumnIndex(CL_BackgroundIMG));
+            int evolution = qr.getInt(qr.getColumnIndex(CL_Evolution));
+            int recover = qr.getInt(qr.getColumnIndex(CL_Recover));
 
             // new obj
-            item = new ShopItem(id, cate_id, name, desc, price, background, typePet);
+            item = new ShopItem(id, cate_id, name, desc, price, background, typePet, evolution, recover);
         }
 
         qr.close();
@@ -139,9 +149,11 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
                 int price = qr.getInt(qr.getColumnIndex(CL_Price));
                 int typePet = qr.getInt(qr.getColumnIndex(CL_TypePet));
                 int background = qr.getInt(qr.getColumnIndex(CL_BackgroundIMG));
+                int evolution = qr.getInt(qr.getColumnIndex(CL_Evolution));
+                int recover = qr.getInt(qr.getColumnIndex(CL_Recover));
 
                 // new obj
-                ShopItem item = new ShopItem(id, cate_id, name, desc, price, background, typePet);
+                ShopItem item = new ShopItem(id, cate_id, name, desc, price, background, typePet, evolution, recover);
                 arrItems.add(item);
             }
             while (qr.moveToNext());

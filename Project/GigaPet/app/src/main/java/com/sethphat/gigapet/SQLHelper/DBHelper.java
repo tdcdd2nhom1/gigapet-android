@@ -63,7 +63,9 @@ public abstract class DBHelper extends SQLiteOpenHelper {
                                             ShopItemHelper.CL_Price + " INTEGER DEFAULT 0," +
                                             ShopItemHelper.CL_BackgroundIMG + " INTEGER DEFAULT 0," +
                                             ShopItemHelper.CL_TypePet + " INTEGER DEFAULT 0," +
-                                            ShopItemHelper.CL_Image+ " TEXT" +
+                                            ShopItemHelper.CL_Image+ " TEXT," +
+                                            ShopItemHelper.CL_Evolution+ " INTEGER DEFAULT 0," +
+                                            ShopItemHelper.CL_Recover+ " INTEGER DEFAULT 0" +
                                         ")";
 
         db.execSQL(create_shopitem_table);

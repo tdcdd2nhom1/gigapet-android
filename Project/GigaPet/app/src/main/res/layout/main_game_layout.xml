@@ -14,6 +14,7 @@
         android:layout_weight="7">
 
         <ImageButton
+            android:onClick="showInfo"
             android:layout_margin="@dimen/sideIMGMargin"
             android:id="@+id/imgInfo"
             android:layout_width="@dimen/settingSize"
