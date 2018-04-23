@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Header color -->
+    <color name="colorShop">#f78fb3</color>
+    <color name="colorBackground">#FCD4DC</color>
+    <color name="colorMoney">#ffa801</color>
 </resources>

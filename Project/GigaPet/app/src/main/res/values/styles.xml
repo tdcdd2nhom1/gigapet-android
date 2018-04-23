@@ -9,7 +9,7 @@
     </style>
 
     <style name="BackgroundHome">
-        <item name="android:background">@drawable/background_home</item>
+        <item name="android:background">@drawable/home_none</item>
     </style>
 
     <style name="BackgroundYard">

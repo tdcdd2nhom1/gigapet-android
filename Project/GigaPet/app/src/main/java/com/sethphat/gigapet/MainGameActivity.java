@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.content.Intent;
 import com.sethphat.gigapet.Common.FontChangeCrawler;
 import com.sethphat.gigapet.Configs.IntentKey;
 import com.sethphat.gigapet.Configs.Setting;
@@ -75,5 +75,15 @@ public class MainGameActivity extends AppCompatActivity {
     private void renderGame()
     {
 
+    }
+
+    /**
+     * Go to Shop page
+     *
+     * @param view
+     */
+    public void shopPage(View view) {
+        Intent i = new Intent(MainGameActivity.this, ShopPageActivity.class);
+        startActivity(i);
     }
 }

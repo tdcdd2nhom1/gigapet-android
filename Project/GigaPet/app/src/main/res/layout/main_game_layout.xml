@@ -40,7 +40,10 @@
             android:layout_below="@id/imgInfo"
             android:layout_width="@dimen/sideIMGSize"
             android:layout_height="@dimen/sideIMGSize"
-            android:background="@drawable/ico_cart_2"/>
+            android:onClick="shopPage"
+            android:scaleType="fitXY"
+            android:src="@drawable/selector_shop"
+            android:background="@android:color/transparent"/>
 
         <ImageButton
             android:id="@+id/btnWC"
@@ -49,7 +52,9 @@
             android:layout_below="@id/btnShop"
             android:layout_width="@dimen/sideIMGSize"
             android:layout_height="@dimen/sideIMGSize"
-            android:background="@drawable/ico_toilet"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/selector_toilet"
+            android:background="@android:color/transparent"/>
 
         <ImageButton
             android:layout_margin="@dimen/sideIMGMargin"
@@ -58,7 +63,9 @@
             android:layout_below="@id/btnWC"
             android:layout_width="@dimen/sideIMGSize"
             android:layout_height="@dimen/sideIMGSize"
-            android:background="@drawable/ico_shower" />
+            android:scaleType="fitXY"
+            android:src="@drawable/selector_shower"
+            android:background="@android:color/transparent" />
 
 
         <!-- Button player right -->
@@ -69,7 +76,9 @@
             android:layout_below="@id/imgSetting"
             android:layout_width="@dimen/sideIMGSize"
             android:layout_height="@dimen/sideIMGSize"
-            android:background="@drawable/ico_park"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/selector_park"
+            android:background="@android:color/transparent"/>
 
         <ImageButton
             android:layout_margin="@dimen/sideIMGMargin"
@@ -78,7 +87,9 @@
             android:layout_below="@id/btnGoOut"
             android:layout_width="@dimen/sideIMGSize"
             android:layout_height="@dimen/sideIMGSize"
-            android:background="@drawable/ico_food"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/selector_food"
+            android:background="@android:color/transparent"/>
 
         <ImageButton
             android:id="@+id/btnDrink"
@@ -87,7 +98,9 @@
             android:layout_below="@id/btnEat"
             android:layout_width="@dimen/sideIMGSize"
             android:layout_height="@dimen/sideIMGSize"
-            android:background="@drawable/ico_drink"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/selector_drink"
+            android:background="@android:color/transparent"/>
 
         <!-- PET Info -->
 
@@ -99,7 +112,7 @@
             android:layout_height="wrap_content"
             style="@style/PetName"
             android:background="@drawable/rounded_corner"
-            android:text="Chú Võ"/>
+            android:text="Vũ đẹp trai"/>
 
         <ImageView
             android:id="@+id/imgPet"

@@ -10,7 +10,10 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 public class SplashActivity extends AppCompatActivity {
-    private final int TIME_OUT = 3000; // 3 seconds
+    ImageView imgGif1 ;
+    ImageView imgGif2 ;
+    ImageView imgGif3 ;
+    private final int TIME_OUT = 5000; // 5 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

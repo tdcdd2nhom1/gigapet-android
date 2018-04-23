@@ -27,4 +27,8 @@
     <!-- err mess -->
     <string name="err_mess_input_name">Please input your name before start new!</string>
     <string name="err_mess_failed_new_game">Failed to create a new game, please try again!</string>
+
+    <!-- Header -->
+    <string name="shop">Shop</string>
+
 </resources>
