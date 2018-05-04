@@ -41,11 +41,28 @@ public class ItemAdapter extends ArrayAdapter<Category> {
 
         //hiển thị data lên từng item của listview ở vị trí position
         Category category = getItem(position);
-        tvItemsName.setText(category.getName());
+
+        String name = category.getName();
+        tvItemsName.setText(name);
         tvTotal.setText(Long.toString(category.getTotalItems()));
 
-        // load img qua url, plugin Picasso
-        Glide.with(getContext()).load(R.drawable.foodtruck).into(imgIcon);
+        // load img qua url
+        switch(name) {
+            case "Food":
+                Glide.with(getContext()).load(R.drawable.foodtruck).into(imgIcon);
+                break;
+            case "Drink":
+                Glide.with(getContext()).load(R.drawable.icecream).into(imgIcon);
+                break;
+            case "Background":
+                Glide.with(getContext()).load(R.drawable.foodtruck).into(imgIcon);
+                break;
+            case "Clothes/Skins":
+                Glide.with(getContext()).load(R.drawable.foodtruck).into(imgIcon);
+                break;
+            default:
+                break;
+        }
 
         return convertView;//trả về 1 view khi đã thiết đặt xong
     }
