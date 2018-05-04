@@ -1,6 +1,5 @@
 package com.sethphat.gigapet.Common;
 
-import android.content.Context;
 
 import com.sethphat.gigapet.SQLHelper.CategoryHelper;
 import com.sethphat.gigapet.SQLHelper.ShopItemHelper;

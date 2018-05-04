@@ -11,6 +11,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.sethphat.gigapet.Common.DBAccess;
+import com.sethphat.gigapet.Configs.SQLiteAccess;
 import com.sethphat.gigapet.SQLHelper.CategoryHelper;
 import com.sethphat.gigapet.SQLHelper.ShopItemHelper;
 import com.sethphat.gigapet.SQLHelper.UserHelper;
@@ -30,17 +31,16 @@ public class SplashActivity extends AppCompatActivity {
         DBAccess.ShopItem = new ShopItemHelper(this);
         DBAccess.UserItemRepo = new UserItemHelper(this);
 
-<<<<<<< HEAD
+
         SQLiteAccess.InitHelper(this);
         //SQLiteAccess.CreateDummyData();
-=======
+
         // splash event
         HandlerSplash();
     }
->>>>>>> be2def1564707a64787b92ed57e0634a68a454dd
 
-    public void HandlerSplash()
-    {
+
+    public void HandlerSplash() {
         // logo
         ImageView imgLogo = (ImageView) findViewById(R.id.imgLogo);
 
