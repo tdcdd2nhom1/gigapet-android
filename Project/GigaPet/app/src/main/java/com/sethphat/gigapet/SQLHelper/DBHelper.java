@@ -30,17 +30,20 @@ public abstract class DBHelper extends SQLiteOpenHelper {
                                         UserHelper.CL_PetName + " TEXT," +
                                         UserHelper.CL_Gold + " INTEGER," +
                                         UserHelper.CL_BackgroundIMG + " INTEGER," +
-                                        UserHelper.CL_Type + " INTEGER," +
-                                        UserHelper.CL_Evolution + " INTEGER," +
+                                        UserHelper.CL_Type + " INTEGER DEFAULT 1," +
+                                        UserHelper.CL_Evolution + " INTEGER DEFAULT 1," +
                                         UserHelper.CL_Heart + " INTEGER," +
                                         UserHelper.CL_Experience + " INTEGER," +
-                                        UserHelper.CL_PetSkin + " INTEGER," +
+                                        UserHelper.CL_PetSkin + " INTEGER DEFAULT 0," +
                                         UserHelper.CL_Hunger + " INTEGER," +
                                         UserHelper.CL_Thirsty + " INTEGER," +
                                         UserHelper.CL_Fun + " INTEGER," +
                                         UserHelper.CL_Hygiene + " INTEGER," +
                                         UserHelper.CL_Energy + " INTEGER," +
                                         UserHelper.CL_Bladder + " INTEGER," +
+                                        UserHelper.CL_IsSleeping + " INTEGER DEFAULT 0," +
+                                        UserHelper.CL_GoodFeeling + " INTEGER DEFAULT 0," +
+                                        UserHelper.CL_BadFeeling + " INTEGER DEFAULT 0," +
                                         UserHelper.CL_LastTime + " INTEGER" +
                                     ")";
 

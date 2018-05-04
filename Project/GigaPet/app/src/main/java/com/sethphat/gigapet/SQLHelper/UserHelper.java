@@ -35,6 +35,9 @@ public class UserHelper extends DBHelper implements QueryTemplate<User> {
     protected final static String CL_Hygiene = "Hygiene";
     protected final static String CL_Energy = "Energy";
     protected final static String CL_Bladder = "Bladder";
+    protected final static String CL_IsSleeping = "IsSleeping";
+    protected final static String CL_GoodFeeling = "GoodFeeling";
+    protected final static String CL_BadFeeling = "BadFeeling";
     protected final static String CL_LastTime = "LastTime";
 
     public UserHelper(Context context) {
@@ -62,6 +65,9 @@ public class UserHelper extends DBHelper implements QueryTemplate<User> {
         cv.put(CL_Hygiene, info.getHygiene());
         cv.put(CL_Energy, info.getEnergy());
         cv.put(CL_Bladder, info.getBladder());
+        cv.put(CL_IsSleeping, info.getIsSleeping());
+        cv.put(CL_GoodFeeling, info.getGoodFeeling());
+        cv.put(CL_BadFeeling, info.getBadFeeling());
         cv.put(CL_LastTime, info.getLastTime());
 
         long id = db.insert(TABLE_NAME, null, cv);
@@ -90,6 +96,9 @@ public class UserHelper extends DBHelper implements QueryTemplate<User> {
         cv.put(CL_Hygiene, info.getHygiene());
         cv.put(CL_Energy, info.getEnergy());
         cv.put(CL_Bladder, info.getBladder());
+        cv.put(CL_IsSleeping, info.getIsSleeping());
+        cv.put(CL_GoodFeeling, info.getGoodFeeling());
+        cv.put(CL_BadFeeling, info.getBadFeeling());
         cv.put(CL_LastTime, info.getLastTime());
 
         db.update(TABLE_NAME, cv, "ID = ?", new String[] {Integer.toString(info.getID())});
@@ -129,7 +138,11 @@ public class UserHelper extends DBHelper implements QueryTemplate<User> {
                 user.setFun(qr.getInt(qr.getColumnIndex(CL_Fun)));
                 user.setEnergy(qr.getInt(qr.getColumnIndex(CL_Energy)));
                 user.setBladder(qr.getInt(qr.getColumnIndex(CL_Bladder)));
+                user.setIsSleeping(qr.getInt(qr.getColumnIndex(CL_IsSleeping)));
+                user.setGoodFeeling(qr.getInt(qr.getColumnIndex(CL_GoodFeeling)));
+                user.setBadFeeling(qr.getInt(qr.getColumnIndex(CL_BadFeeling)));
                 user.setLastTime(qr.getInt(qr.getColumnIndex(CL_LastTime)));
+
 
                 list.add(user);
 
@@ -167,6 +180,9 @@ public class UserHelper extends DBHelper implements QueryTemplate<User> {
             user.setFun(qr.getInt(qr.getColumnIndex(CL_Fun)));
             user.setEnergy(qr.getInt(qr.getColumnIndex(CL_Energy)));
             user.setBladder(qr.getInt(qr.getColumnIndex(CL_Bladder)));
+            user.setIsSleeping(qr.getInt(qr.getColumnIndex(CL_IsSleeping)));
+            user.setGoodFeeling(qr.getInt(qr.getColumnIndex(CL_GoodFeeling)));
+            user.setBadFeeling(qr.getInt(qr.getColumnIndex(CL_BadFeeling)));
             user.setLastTime(qr.getInt(qr.getColumnIndex(CL_LastTime)));
         }
 

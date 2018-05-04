@@ -31,4 +31,7 @@
     <!-- Header -->
     <string name="shop">Shop</string>
 
+    <!-- In game mess -->
+    <string name="bad_feeling_notice">Oh no, your pet have bad feeling right now and lost a heart, please take care it carefully!</string>
+
 </resources>

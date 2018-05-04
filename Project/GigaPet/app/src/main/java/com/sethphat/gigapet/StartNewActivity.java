@@ -1,7 +1,9 @@
 package com.sethphat.gigapet;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.sethphat.gigapet.Adapter.SlidingImageAdapter;
+import com.sethphat.gigapet.Common.DBAccess;
 import com.sethphat.gigapet.Common.FontChangeCrawler;
 import com.sethphat.gigapet.Common.HelperFunction;
 import com.sethphat.gigapet.Common.OnSwipeTouchListener;
@@ -30,44 +34,31 @@ public class StartNewActivity extends AppCompatActivity {
 
     // control
     EditText edtName;
+    private ViewPager mPager;
+    private int currentPage = 0;
+    private int NUM_PAGES = 0;
+
+    // pet image
+    private Drawable[] petImgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_new_layout);
 
+        // get default imgs
+        petImgs  = Setting.DefaultPetImg(this);
+
         // set font
         FontChangeCrawler fontChanger = new FontChangeCrawler(getAssets(), Setting.Font_Path);
         fontChanger.replaceFonts((ViewGroup) this.findViewById(android.R.id.content));
 
-        // Get main
-        LinearLayout llParent = (LinearLayout) findViewById(R.id.llParent);
-        RelativeLayout rlChoosePet = (RelativeLayout) findViewById(R.id.rlChoosePet);
-        final ImageView imgPet = (ImageView) findViewById(R.id.imgPet);
+        // controls
         edtName = (EditText) findViewById(R.id.edtName);
 
-        // action change pet when swipe left - right
-        rlChoosePet.setOnTouchListener(new OnSwipeTouchListener(StartNewActivity.this) {
-            @Override
-            public void onSwipeLeft() {
-                now_pet++;
-                if (now_pet > max_pet)
-                    now_pet = 1;
-
-                // change image
-                imgPet.setImageResource(getPetImg());
-            }
-
-            @Override
-            public void onSwipeRight() {
-                now_pet--;
-                if (now_pet < 1)
-                    now_pet = max_pet;
-
-                // change image
-                imgPet.setImageResource(getPetImg());
-            }
-        });
+        // ViewPager init
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(new SlidingImageAdapter(this,petImgs));
     }
 
     private @DrawableRes int getPetImg()
@@ -98,7 +89,7 @@ public class StartNewActivity extends AppCompatActivity {
         // set default data
         obj.setBackgroundIMG(0);
         obj.setGold(Setting.DefaultGold);
-        obj.setEvolution(0);
+        obj.setEvolution(1);
         obj.setHeart(0);
         obj.setExperience(0);
         obj.setPetSkin(0);
@@ -112,11 +103,10 @@ public class StartNewActivity extends AppCompatActivity {
 
         // set user data
         obj.setPetName(edtName.getText().toString());
-        obj.setType(now_pet);
+        obj.setType(mPager.getCurrentItem() + 1);
 
         // insert
-        UserHelper userRepo = new UserHelper(this);
-        userRepo.Insert(obj);
+        DBAccess.UserRepo.Insert(obj);
 
 
         // open page
@@ -124,6 +114,7 @@ public class StartNewActivity extends AppCompatActivity {
             Intent i = new Intent(StartNewActivity.this, MainGameActivity.class);
             i.putExtra(IntentKey.USER_ID, obj.getID());
             startActivity(i);
+            finish();
         }
         else {
             Toast.makeText(this, R.string.err_mess_failed_new_game, Toast.LENGTH_SHORT).show();
