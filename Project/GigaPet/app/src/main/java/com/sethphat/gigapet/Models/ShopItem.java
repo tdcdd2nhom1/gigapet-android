@@ -12,8 +12,10 @@ public class ShopItem {
     private int Price;
     private int BackgroundIMG = 0; // if != 0 => this is Background
     private int TypePet = 0; // if 0 => anyone can use
+    private int Evolution = 0; // if 0 => any evolution can use
+    private int Recover = 0;// if food or drink, recover %
 
-    public ShopItem(int ID, int categoryID, String name, String description, int price, int backgroundIMG, int typePet) {
+    public ShopItem(int ID, int categoryID, String name, String description, int price, int backgroundIMG, int typePet, int evolution, int recover) {
         this.ID = ID;
         CategoryID = categoryID;
         Name = name;
@@ -21,6 +23,8 @@ public class ShopItem {
         Price = price;
         BackgroundIMG = backgroundIMG;
         TypePet = typePet;
+        Evolution = evolution;
+        Recover = recover;
     }
 
     public int getID() {
@@ -77,5 +81,21 @@ public class ShopItem {
 
     public void setTypePet(int typePet) {
         TypePet = typePet;
+    }
+
+    public int getEvolution() {
+        return Evolution;
+    }
+
+    public void setEvolution(int evolution) {
+        Evolution = evolution;
+    }
+
+    public int getRecover() {
+        return Recover;
+    }
+
+    public void setRecover(int recover) {
+        Recover = recover;
     }
 }

@@ -34,6 +34,10 @@
             android:name=".ShopPageActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".CategoriesActivity"></activity>
+<<<<<<< HEAD
+=======
+
+>>>>>>> be2def1564707a64787b92ed57e0634a68a454dd
     </application>
 
 </manifest>

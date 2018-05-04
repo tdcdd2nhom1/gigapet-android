@@ -41,6 +41,10 @@ public class ItemAdapter extends ArrayAdapter<Category> {
 
         //hiển thị data lên từng item của listview ở vị trí position
         Category category = getItem(position);
+<<<<<<< HEAD
+=======
+
+>>>>>>> be2def1564707a64787b92ed57e0634a68a454dd
         String name = category.getName();
         tvItemsName.setText(name);
         tvTotal.setText(Long.toString(category.getTotalItems()));
@@ -62,7 +66,10 @@ public class ItemAdapter extends ArrayAdapter<Category> {
             default:
                 break;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> be2def1564707a64787b92ed57e0634a68a454dd
 
         return convertView;//trả về 1 view khi đã thiết đặt xong
     }

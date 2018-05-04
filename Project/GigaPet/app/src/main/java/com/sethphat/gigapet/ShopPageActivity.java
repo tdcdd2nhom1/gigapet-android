@@ -71,6 +71,22 @@ public class ShopPageActivity extends AppCompatActivity {
 
 
     /**
+<<<<<<< HEAD
+=======
+     * Start new game
+    /**
+     * Go to Categories page
+     *
+     * @param view
+     */
+    public void catePage(View view) {
+        Intent i = new Intent(ShopPageActivity.this, CategoriesActivity.class);
+        startActivity(i);
+    }
+
+
+    /**
+>>>>>>> be2def1564707a64787b92ed57e0634a68a454dd
      * Back screen
      *
      * @param view

@@ -16,11 +16,13 @@ public class User {
      * 2 => CAT
      * 3 => HAMSTER
      */
-    private int Type;
-    private int Evolution;
+    private int Type = 1;
+    private int Evolution = 1;
     private int Heart;
     private int Experience;
-    private int PetSkin;
+    private int PetSkin = 0;// default skin
+    private int BadFeeling = 0; // 5 bad feeling => decrease 1 heart
+    private int GoodFeeling = 0; // 5 good feeling => increase 1 heart
 
     // PET Status
     private int Hunger;
@@ -29,6 +31,7 @@ public class User {
     private int Hygiene;
     private int Energy;
     private int Bladder;
+    private int IsSleeping = 0; // 0 mean no, > 0 is yes
 
     // Play status
     private int LastTime;
@@ -182,5 +185,30 @@ public class User {
 
     public void setEvolution(int evolution) {
         Evolution = evolution;
+    }
+
+    public int getIsSleeping() {
+        return IsSleeping;
+    }
+
+    public void setIsSleeping(int isSleeping) {
+        IsSleeping = isSleeping;
+    }
+
+
+    public int getBadFeeling() {
+        return BadFeeling;
+    }
+
+    public void setBadFeeling(int badFeeling) {
+        BadFeeling = badFeeling;
+    }
+
+    public int getGoodFeeling() {
+        return GoodFeeling;
+    }
+
+    public void setGoodFeeling(int goodFeeling) {
+        GoodFeeling = goodFeeling;
     }
 }

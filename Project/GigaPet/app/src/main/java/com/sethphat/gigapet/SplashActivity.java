@@ -4,34 +4,55 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.sethphat.gigapet.Configs.SQLiteAccess;
+import com.sethphat.gigapet.Common.DBAccess;
+import com.sethphat.gigapet.SQLHelper.CategoryHelper;
+import com.sethphat.gigapet.SQLHelper.ShopItemHelper;
+import com.sethphat.gigapet.SQLHelper.UserHelper;
+import com.sethphat.gigapet.SQLHelper.UserItemHelper;
 
 public class SplashActivity extends AppCompatActivity {
-    ImageView imgGif1 ;
-    ImageView imgGif2 ;
-    ImageView imgGif3 ;
-    private final int TIME_OUT = 5000; // 5 seconds
+    private final int TIME_OUT = 3000; // 5 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_layout);
 
+        // solving db (singleton)
+        DBAccess.UserRepo = new UserHelper(this);
+        DBAccess.CateRepo = new CategoryHelper(this);
+        DBAccess.ShopItem = new ShopItemHelper(this);
+        DBAccess.UserItemRepo = new UserItemHelper(this);
 
+<<<<<<< HEAD
         SQLiteAccess.InitHelper(this);
         //SQLiteAccess.CreateDummyData();
+=======
+        // splash event
+        HandlerSplash();
+    }
+>>>>>>> be2def1564707a64787b92ed57e0634a68a454dd
 
-        imgGif1 = (ImageView) findViewById(R.id.imgGif1);
-        imgGif2 = (ImageView) findViewById(R.id.imgGif2);
-        imgGif3 = (ImageView) findViewById(R.id.imgGif3);
+    public void HandlerSplash()
+    {
+        // logo
+        ImageView imgLogo = (ImageView) findViewById(R.id.imgLogo);
 
-        Glide.with(this).load(R.drawable.psy).into(imgGif1);
-        Glide.with(this).load(R.drawable.psy).into(imgGif2);
-        Glide.with(this).load(R.drawable.psy).into(imgGif3);
+        // create an animation
+        Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(1500);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+        imgLogo.startAnimation(animation);
 
+        // run handler to move another activity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -40,6 +61,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }, TIME_OUT);
+
     }
 
 
