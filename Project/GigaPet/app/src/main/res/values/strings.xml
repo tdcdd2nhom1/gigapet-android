@@ -30,5 +30,6 @@
 
     <!-- Header -->
     <string name="shop">Shop</string>
+    <string name="categories">Category</string>
 
 </resources>

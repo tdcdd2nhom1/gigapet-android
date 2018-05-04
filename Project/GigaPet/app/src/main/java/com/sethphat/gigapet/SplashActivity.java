@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
         SQLiteAccess.InitHelper(this);
-        SQLiteAccess.CreateDummyData();
+        //SQLiteAccess.CreateDummyData();
 
         imgGif1 = (ImageView) findViewById(R.id.imgGif1);
         imgGif2 = (ImageView) findViewById(R.id.imgGif2);
