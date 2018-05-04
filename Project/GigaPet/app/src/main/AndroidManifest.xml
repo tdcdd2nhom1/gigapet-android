@@ -18,26 +18,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".HomePageActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".StartNewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".MainGameActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ContinueActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ShopPageActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".CategoriesActivity"></activity>
+
     </application>
 
 </manifest>

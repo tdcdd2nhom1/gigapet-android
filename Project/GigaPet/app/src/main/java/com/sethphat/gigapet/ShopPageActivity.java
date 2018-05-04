@@ -1,6 +1,7 @@
 package com.sethphat.gigapet;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,10 +30,13 @@ public class ShopPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shop_page_layout);
 
+
         btnGoCategories = (ImageButton) findViewById(R.id.btnGoCategories);
         lvItem = (ListView) findViewById(R.id.lvItem);
 
+
         categoryHelper = new CategoryHelper(this);
+
         listCate = categoryHelper.GetAll();
 
         adapter = new ItemAdapter(this, listCate); //khởi tạo adapter
@@ -40,12 +44,17 @@ public class ShopPageActivity extends AppCompatActivity {
 
         //set sự kiện khi click vào mỗi item
 
-       lvItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               Toast.makeText(getApplicationContext(),"dfgdf",Toast.LENGTH_LONG).show();
-           }
-       });
+        lvItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                //catePage(view);
+                Toast.makeText(ShopPageActivity.this, "Vị trí: " + position, Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
 
 
     }
@@ -53,6 +62,19 @@ public class ShopPageActivity extends AppCompatActivity {
 
     /**
      * Start new game
+    /**
+     * Go to Categories page
+     *
+     * @param view
+     */
+    public void catePage(View view) {
+        Intent i = new Intent(ShopPageActivity.this, CategoriesActivity.class);
+        startActivity(i);
+    }
+
+
+    /**
+     * Back screen
      *
      * @param view
      */
