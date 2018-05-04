@@ -12,6 +12,6 @@ public class Setting {
         Setting.isSoundOn = isSoundOn;
     }
 
-
     public static String Font_Path = "fonts/carterone.ttf";
+
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,21 +36,21 @@
 
         <ImageButton
             android:layout_width="@dimen/btn_home_page_width"
-            android:layout_height="@dimen/btn_home_page_heigth"
+            android:layout_height="@dimen/btn_home_page_height"
             android:src="@drawable/selector_start_game"
             android:scaleType="fitCenter"
             android:onClick="startGame"
             android:background="@android:color/transparent"/>
         <ImageButton
             android:layout_width="@dimen/btn_home_page_width"
-            android:layout_height="@dimen/btn_home_page_heigth"
+            android:layout_height="@dimen/btn_home_page_height"
             android:src="@drawable/selector_continue"
             android:scaleType="fitCenter"
             android:onClick="continueGame"
             android:background="@android:color/transparent"/>
         <ImageButton
             android:layout_width="@dimen/btn_home_page_width"
-            android:layout_height="@dimen/btn_home_page_heigth"
+            android:layout_height="@dimen/btn_home_page_height"
             android:src="@drawable/selector_help"
             android:scaleType="fitCenter"
             android:onClick="showHelp"
