@@ -64,20 +64,15 @@ public class HomePageActivity extends AppCompatActivity {
     public void showInfo(View view) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
-        dialog.setTitle("Giới thiệu về game");
-        dialog.setMessage("GigaPet v" + this.getString(R.string.game_version) + "\nMột sản phẩm được làm bởi nhóm 1, thành viên:\n" +
-                " - Trần Minh Phát - Leader\n" +
-                " - Lê Bảo Long - Tester\n" +
-                " - Nguyễn Thị Thanh Hương - Graphic reviewer/Tester\n" +
-                " - Nguyễn Hoàng Vũ - Graphic designer\n" +
-                " - Nguyễn Cao Thọ - Tester\n\n" +
-                "Mọi chi tiết, thắc mắc xin liên hệ với Mr.Phát qua:\n" +
-                " - Email: phatTranMinh96@gmail.com\n" +
-                " - Phone: 0937348373\n\n" +
-                "Have fun!");
+        dialog.setTitle(R.string.intro_title);
+
+        // string builder
+        String mess = getString(R.string.introduction);
+        mess = mess.replace("{version}", getString(R.string.game_version));
+
+        dialog.setMessage(mess);
 
         dialog.setPositiveButton("Ok", null);
-        dialog.setNegativeButton("Cancel", null);
 
         dialog.show();
     }

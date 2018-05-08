@@ -6,16 +6,16 @@ package com.sethphat.gigapet.Configs;
 
 public class PetExperience {
     private static int[] EXP = new int[] {
-            100, // Level 1
-            200,
-            500,
-            1000,
-            2000,
-            4000,
-            8000,
-            16000,
-            32000,
-            64000 // Level 10
+            15, // Level 1
+            35,
+            75,
+            150,
+            350,
+            550,
+            850,
+            1250,
+            1850,
+            2500 // Level 10 - final
     };
 
     /**
@@ -31,8 +31,7 @@ public class PetExperience {
 
         for (int i = 0; i < EXP.length; i++)
         {
-            int level = i + 1;
-            if (nowLevel == level && nowExp >= EXP[i+1])
+            if (nowLevel == i && nowExp >= EXP[i])
             {
                 return true;
             }
@@ -56,5 +55,10 @@ public class PetExperience {
         }
 
         return false;
+    }
+
+    public static int getExp(int nowLevel)
+    {
+        return EXP[nowLevel];
     }
 }

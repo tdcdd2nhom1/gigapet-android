@@ -22,7 +22,7 @@ public class User {
     private int Experience;
     private int PetSkin = 0;// default skin
     private int BadFeeling = 0; // 5 bad feeling => decrease 1 heart
-    private int GoodFeeling = 0; // 5 good feeling => increase 1 heart
+    private int GoodFeeling = 0; // ? good feeling => increase 1 heart
 
     // PET Status
     private int Hunger;

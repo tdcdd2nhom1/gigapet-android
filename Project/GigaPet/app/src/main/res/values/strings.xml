@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GigaPet</string>
-    <string name="game_version">0.1.1</string>
+    <string name="game_version">0.1.2</string>
 
     <string name="OpenSaveHelp">CONTINUE</string>
     <string name="StartNewHelp">START NEW GAME</string>
@@ -30,6 +30,9 @@
 
     <!-- Header -->
     <string name="shop">Shop</string>
+    <string name="setting">Setting</string>
+    <string name="up_level_title">HEART INCREASED!</string>
+    <string name="evo_title">YOUR PET IS EVOLVING!</string>
 
 
     <!-- In game mess -->
@@ -37,5 +40,13 @@
 
     <string name="categories">Category</string>
 
+    <string name="intro_title">Developers Introduction</string>
+    <string name="introduction"><![CDATA[GigaPet v{version}\n
+A game that made by Group 2 - Android Developing 2\n
+Leading by: Tran Minh Phat\n
+Contact: 0937348373\n
+Have fun!!]]></string>
 
+    <string name="up_level_body">Congratulation! Your pet has just increased 1 heart, make him/her happy and it will surprise you!</string>
+    <string name="evo_body">Congratulation! Your pet has just evolved to a new FORM!</string>
 </resources>

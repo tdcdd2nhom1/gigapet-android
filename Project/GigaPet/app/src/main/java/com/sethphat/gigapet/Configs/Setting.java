@@ -16,6 +16,7 @@ public class Setting {
     private static boolean isSoundOn = true;
     public static int DefaultGold = 500;
     public static User UserData = null;
+    public static String STATE = "DEV"; // LIVE, DEV
 
     public static boolean isIsSoundOn() {
         return isSoundOn;

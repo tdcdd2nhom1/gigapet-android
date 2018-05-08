@@ -1,20 +1,27 @@
 package com.sethphat.gigapet;
 
+import android.app.Service;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.Intent;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.sethphat.gigapet.Common.DBAccess;
 import com.sethphat.gigapet.Common.FontChangeCrawler;
 import com.sethphat.gigapet.Common.HelperFunction;
+import com.sethphat.gigapet.Common.OnSwipeTouchListener;
 import com.sethphat.gigapet.Configs.IntentKey;
+import com.sethphat.gigapet.Configs.PetExperience;
 import com.sethphat.gigapet.Configs.SQLiteAccess;
 import com.sethphat.gigapet.Configs.Setting;
 import com.sethphat.gigapet.Models.User;
@@ -24,14 +31,16 @@ import com.sethphat.gigapet.databinding.MainGameLayoutBinding;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainGameActivity extends AppCompatActivity {
+public class MainGameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener,GestureDetector.OnDoubleTapListener {
     // default config
     private int UserID = 0;
     private int MAX_STATUS = 100;
     private int DEPRESS_BELOW_STATUS = 20; // if the stats below this one, depression of the pet will come up.
     private int MAX_FEELING = 5;
+    private int MAX_GOOD_FEELING = 20;
     private int Check_Interval = 1000 * 60; // 60 seconds, -2 per stats
     private int STATS_DOWN_NUM = 2;
+    private boolean isRendered = false;
     private Timer timer = null;
 
     // data user
@@ -39,12 +48,14 @@ public class MainGameActivity extends AppCompatActivity {
 
     // layout data binding
     MainGameLayoutBinding binding;
+    private GestureDetector gestureScanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.main_game_layout);
         binding = DataBindingUtil.setContentView(this, R.layout.main_game_layout);
+        gestureScanner = new GestureDetector(this, this);
 
         // load font
         FontChangeCrawler fontChanger = new FontChangeCrawler(getAssets(), Setting.Font_Path);
@@ -60,8 +71,15 @@ public class MainGameActivity extends AppCompatActivity {
         if (user == null)
             finish(); // error 2
 
+        // update info from the last login to now
+        UpdateFromLastOpen();
+
         // ok, let's render the game
         renderGame();
+
+        // cheat game
+        fullStatus();
+        evolutionStatus();
     }
 
     /**
@@ -71,21 +89,53 @@ public class MainGameActivity extends AppCompatActivity {
     public void showInfo(View view) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
-        dialog.setTitle("Giới thiệu về game");
-        dialog.setMessage("GigaPet v" + this.getString(R.string.game_version) + "\nMột sản phẩm được làm bởi nhóm 1, thành viên:\n" +
-                " - Trần Minh Phát - Leader\n" +
-                " - Lê Bảo Long - Tester\n" +
-                " - Nguyễn Thị Thanh Hương - Graphic reviewer/Tester\n" +
-                " - Nguyễn Hoàng Vũ - Graphic designer\n" +
-                " - Nguyễn Cao Thọ - Tester\n\n" +
-                "Mọi chi tiết, thắc mắc xin liên hệ với Mr.Phát qua:\n" +
-                " - Email: phatTranMinh96@gmail.com\n" +
-                " - Phone: 0937348373\n\n" +
-                "Have fun!");
+        dialog.setTitle(R.string.intro_title);
+
+        // string builder
+        String mess = getString(R.string.introduction);
+        mess = mess.replace("{version}", getString(R.string.game_version));
+
+        dialog.setMessage(mess);
 
         dialog.setPositiveButton("Ok", null);
-        dialog.setNegativeButton("Cancel", null);
 
+        dialog.show();
+    }
+
+    /**
+     * Settings game
+     * @param view
+     */
+    public void showSetting(View view) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.setting);
+
+        // view
+        View v = getLayoutInflater().inflate(R.layout.dialog_setting, null);
+
+        // find item
+        RadioButton rdbOn = v.findViewById(R.id.rdbOn);
+        final RadioButton rdbOff = v.findViewById(R.id.rdbOff);
+
+        // check current status
+        if (Setting.isIsSoundOn())
+            rdbOn.setChecked(true);
+        else
+            rdbOff.setChecked(true);
+
+        dialog.setView(v);
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                boolean isOn = true;
+                if (rdbOff.isChecked())
+                    isOn = false;
+
+                Setting.setIsSoundOn(isOn);
+            }
+        });
+
+        dialog.setNegativeButton("Cancel", null);
         dialog.show();
     }
 
@@ -94,9 +144,6 @@ public class MainGameActivity extends AppCompatActivity {
      */
     private void renderGame()
     {
-        // update info first
-        UpdateFromLastOpen();
-
         // set pet info
         binding.txtPetName.setText(user.getPetName() + "");
         binding.txtMoney.setText(user.getGold() + "");
@@ -125,6 +172,18 @@ public class MainGameActivity extends AppCompatActivity {
 
         // okay then, running interval check
         AutoUpdateStats();
+
+
+        // EVENT:
+        binding.imgPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Play pet sound
+            }
+        });
+
+        // finalization render
+        isRendered = true;
     }
 
     /**
@@ -199,10 +258,12 @@ public class MainGameActivity extends AppCompatActivity {
     private void AutoUpdateStats()
     {
         timer = new Timer();
-        TimerTask task = new TimerTask() {
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 int BadFeeling = 0;
+                boolean isUpLevel = false;
+                boolean isEvolution = false;
 
                 // set
                 user.setHunger((user.getHunger() - 2 >= 0) ? user.getHunger() - 2 : 0);
@@ -231,6 +292,12 @@ public class MainGameActivity extends AppCompatActivity {
                 if (user.getEnergy() < DEPRESS_BELOW_STATUS && user.getIsSleeping() == 0)
                     BadFeeling++;
 
+                // set bad feeling
+                if (user.getGoodFeeling() > 0)
+                {
+                    user.setGoodFeeling(user.getGoodFeeling() - BadFeeling >= 0 ? user.getGoodFeeling() - BadFeeling : 0);
+                    BadFeeling = BadFeeling - user.getGoodFeeling();
+                }
                 user.setBadFeeling(user.getBadFeeling() + BadFeeling);
 
                 // checking bad feeling
@@ -240,23 +307,61 @@ public class MainGameActivity extends AppCompatActivity {
                     Toast.makeText(MainGameActivity.this, R.string.bad_feeling_notice, Toast.LENGTH_SHORT).show();
                 }
 
+                // Up level processing - Up heart
+                if (PetExperience.isUpLevel(user.getHeart(), user.getGoodFeeling()))
+                {
+                    // update value
+                    user.setGoodFeeling(user.getGoodFeeling() - PetExperience.getExp(user.getHeart()));
+                    user.setHeart(user.getHeart() + 1);
+
+                    // flags
+                    isUpLevel = true;
+                    isEvolution = true;
+
+                    // evolution
+                    switch (user.getHeart())
+                    {
+                        case 3:
+                            user.setEvolution(2);
+                            break;
+                        case 7:
+                            user.setEvolution(3);
+                            break;
+                        default:
+                            isEvolution = false;
+                            break;
+                    }
+                }
+
                 // db update
                 DBAccess.UserRepo.Update(user);
 
+                // Declare final boolean
+                final boolean finalIsEvolution = isEvolution;
+                final boolean finalIsUpLevel = isUpLevel;
+
+                // run task UI
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         // update screen on thread
                         MainGameActivity.this.setCurrentStatus();
+
+                        if (finalIsEvolution)
+                        {
+                            MainGameActivity.this.EvolutionDialog();
+                        }
+                        else if (finalIsUpLevel)
+                        {
+                            MainGameActivity.this.UpLevelDialog();
+                        }
                     }
                 });
 
                 // log to know status
                 Log.d("STATUS_CHANGED", "Changed pet status now!!!");
             }
-        };
-
-        timer.schedule(task, 0, Check_Interval);
+        }, 0, Check_Interval);
     }
 
     /**
@@ -275,14 +380,23 @@ public class MainGameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        // stop timer
         if(timer != null)
             timer.cancel();
+
+        Log.d("SYSTEM_TRACKING", "Paused Activity");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        AutoUpdateStats();
+
+        // only resume if the page already rendered (which mean don't cost us an both time running, annoying ehhh)
+        if (isRendered)
+            AutoUpdateStats();
+
+        Log.d("SYSTEM_TRACKING", "Resume Activity");
     }
 
     /**
@@ -296,7 +410,139 @@ public class MainGameActivity extends AppCompatActivity {
         // db update
         DBAccess.UserRepo.Update(user);
 
+        Log.d("FINALIZATION", "GAME FINISHED AND SAVED!");
+
         // run parent destroy, then end this madness plzzz
         super.onDestroy();
+    }
+
+
+    /**
+     * Uplevel (heart) dialog
+     */
+    private void UpLevelDialog()
+    {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle(R.string.up_level_title);
+        dialog.setMessage(R.string.up_level_body);
+        dialog.setPositiveButton("Ok", null);
+
+        dialog.show();
+    }
+
+    /**
+     * Evolution dialog
+     */
+    private void EvolutionDialog()
+    {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle(R.string.evo_title);
+        dialog.setMessage(R.string.evo_body);
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // re-render the game
+                MainGameActivity.this.renderGame();
+            }
+        });
+
+        dialog.show();
+    }
+
+    // Cheating functions down here
+
+    // full status cheat
+    private void fullStatus()
+    {
+        if (Setting.STATE.equals("DEV") == false)
+            return;
+
+        binding.llMainGame.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                user.setBladder(MAX_STATUS);
+                user.setFun(MAX_STATUS);
+                user.setHygiene(MAX_STATUS);
+                user.setThirsty(MAX_STATUS);
+                user.setHunger(MAX_STATUS);
+                user.setEnergy(MAX_STATUS);
+
+                // db update
+                DBAccess.UserRepo.Update(user);
+
+                // Update GUI
+                setCurrentStatus();
+
+                Log.d("CHEAT_ACTIVATED", "CHEATED #1!");
+                return true;
+            }
+        });
+    }
+
+    // evolution cheats
+    private void evolutionStatus()
+    {
+        if (Setting.STATE.equals("DEV") == false)
+            return;
+
+        binding.txtPetName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // increase 100 GOOD FEELING
+                user.setGoodFeeling(user.getGoodFeeling() + 100);
+
+                // db update
+                DBAccess.UserRepo.Update(user);
+                Log.d("CHEAT_ACTIVATED", "CHEATED #2!");
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 }
