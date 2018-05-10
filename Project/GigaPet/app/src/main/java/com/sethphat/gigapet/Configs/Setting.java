@@ -17,6 +17,7 @@ public class Setting {
     public static int DefaultGold = 500;
     public static User UserData = null;
     public static String STATE = "DEV"; // LIVE, DEV
+    public static String DATE_FORMAT = "dd/MM/yy HH:mm:ss";
 
     public static boolean isIsSoundOn() {
         return isSoundOn;
@@ -84,5 +85,43 @@ public class Setting {
         }
 
         return imgs;
+    }
+
+    /**
+     * Shop item drawable
+     */
+    public static Drawable GetImageShopItem(Context ct, String file_name)
+    {
+        // load image
+        try {
+            // get input stream
+            AssetManager assets = ct.getAssets();
+            InputStream ims = assets.open("shopitem/" + file_name);
+
+            // load image as Drawable
+            return Drawable.createFromStream(ims, null);
+        }
+        catch(IOException ex) {
+            return null;
+        }
+    }
+
+    /**
+     * Background game drawable
+     */
+    public static Drawable GetBackgroundImg(Context ct, String file_name)
+    {
+        // load image
+        try {
+            // get input stream
+            AssetManager assets = ct.getAssets();
+            InputStream ims = assets.open("background/" + file_name);
+
+            // load image as Drawable
+            return Drawable.createFromStream(ims, null);
+        }
+        catch(IOException ex) {
+            return null;
+        }
     }
 }

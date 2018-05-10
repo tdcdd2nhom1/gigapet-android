@@ -56,6 +56,7 @@
                 android:layout_margin="@dimen/sideIMGMargin"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
+                android:onClick="goToToilet"
                 android:src="@drawable/selector_toilet" />
 
             <ImageButton
@@ -67,6 +68,7 @@
                 android:layout_margin="@dimen/sideIMGMargin"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
+                android:onClick="goToBath"
                 android:src="@drawable/selector_shower" />
 
 

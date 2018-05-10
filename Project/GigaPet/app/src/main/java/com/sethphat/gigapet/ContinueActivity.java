@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.sethphat.gigapet.Adapter.UserAdapter;
 import com.sethphat.gigapet.Common.DBAccess;
 import com.sethphat.gigapet.Common.FontChangeCrawler;
 import com.sethphat.gigapet.Configs.IntentKey;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 public class ContinueActivity extends AppCompatActivity {
 
     private ArrayList<User> listUser;
-    private ArrayList<String> listUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,6 @@ public class ContinueActivity extends AppCompatActivity {
 
         // load all users
         listUser = DBAccess.UserRepo.GetAll();
-        listUsername = new ArrayList<>();
-
-        for (User user : listUser)
-        {
-            listUsername.add(user.getPetName());
-        }
 
         // render
         render();
@@ -49,7 +43,7 @@ public class ContinueActivity extends AppCompatActivity {
         ListView lvSave = (ListView) findViewById(R.id.lvSave);
 
         // create arrAdapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listUsername);
+        UserAdapter adapter = new UserAdapter(this, R.layout.continue_list_view, listUser);
 
         // set source
         lvSave.setAdapter(adapter);

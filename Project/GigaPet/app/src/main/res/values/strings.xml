@@ -5,6 +5,8 @@
     <string name="OpenSaveHelp">CONTINUE</string>
     <string name="StartNewHelp">START NEW GAME</string>
     <string name="ChoosePet">CHOOSE YOUR PET</string>
+    <string name="EatTitle">EATING TIME!!</string>
+    <string name="DrinkTitle">DRINKING TIME!!</string>
 
 
     <!-- Pet status -->
@@ -39,6 +41,8 @@
     <string name="bad_feeling_notice">Oh no, your pet have bad feeling right now and lost a heart, please take care it carefully!</string>
 
     <string name="categories">Category</string>
+    <string name="last_time">Last time played: </string>
+    <string name="welcome_mess">Welcome to GigaPet! Lets have fun together!</string>
 
     <string name="intro_title">Developers Introduction</string>
     <string name="introduction"><![CDATA[GigaPet v{version}\n
@@ -49,4 +53,6 @@ Have fun!!]]></string>
 
     <string name="up_level_body">Congratulation! Your pet has just increased 1 heart, make him/her happy and it will surprise you!</string>
     <string name="evo_body">Congratulation! Your pet has just evolved to a new FORM!</string>
+    <string name="title_activity_eat">EatActivity</string>
+    <string name="title_activity_drink">DrinkActivity</string>
 </resources>

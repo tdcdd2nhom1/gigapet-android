@@ -38,9 +38,13 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     private int DEPRESS_BELOW_STATUS = 20; // if the stats below this one, depression of the pet will come up.
     private int MAX_FEELING = 5;
     private int MAX_GOOD_FEELING = 20;
+    private int TOILET_TIME = 1000 * 10; // 10 seconds
+    private int BATH_TIME = 1000 * 30; //30 seconds
     private int Check_Interval = 1000 * 60; // 60 seconds, -2 per stats
     private int STATS_DOWN_NUM = 2;
     private boolean isRendered = false;
+    private int REQUEST_TO_EAT = 69;
+    private int REQUEST_TO_DRINK = 70;
     private Timer timer = null;
 
     // data user
@@ -70,6 +74,9 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         user = DBAccess.UserRepo.GetByID(UserID);
         if (user == null)
             finish(); // error 2
+
+        // show welcome message
+        Toast.makeText(this, R.string.welcome_mess, Toast.LENGTH_SHORT).show();
 
         // update info from the last login to now
         UpdateFromLastOpen();
@@ -179,6 +186,28 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
             @Override
             public void onClick(View v) {
                 // TODO: Play pet sound
+            }
+        });
+        binding.btnEat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // set data
+                Setting.UserData = user;
+
+                // send intent
+                Intent intent = new Intent(MainGameActivity.this, EatActivity.class);
+                startActivityForResult(intent, REQUEST_TO_EAT);
+            }
+        });
+        binding.btnDrink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // set data
+                Setting.UserData = user;
+
+                // send intent
+                Intent intent = new Intent(MainGameActivity.this, DrinkActivity.class);
+                startActivityForResult(intent, REQUEST_TO_DRINK);
             }
         });
 
@@ -375,6 +404,31 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     }
 
     /**
+     * Go to toilet
+     * @param view
+     */
+    public void goToToilet(View view) {
+
+    }
+
+    /**
+     * Go to bathroom
+     * @param view
+     */
+    public void goToBath(View view) {
+
+    }
+
+    /**
+     * On result activity back
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Just render again this activity :D
+        renderGame();
+    }
+
+    /**
      * State if pause - resume activity
      */
     @Override
@@ -545,4 +599,5 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
+
 }

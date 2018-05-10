@@ -33,8 +33,15 @@
         <activity
             android:name=".ShopPageActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".CategoriesActivity"></activity>
-
+        <activity android:name=".CategoriesActivity" />
+        <activity
+            android:name=".EatActivity"
+            android:label="@string/title_activity_eat"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".DrinkActivity"
+            android:label="@string/title_activity_drink"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

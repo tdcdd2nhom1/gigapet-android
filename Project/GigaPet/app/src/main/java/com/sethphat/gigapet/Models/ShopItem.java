@@ -9,6 +9,7 @@ public class ShopItem {
     private int CategoryID;
     private String Name;
     private String Description;
+    private String Image;
     private int Price;
     private int BackgroundIMG = 0; // if != 0 => this is Background
     private int TypePet = 0; // if 0 => anyone can use
@@ -97,5 +98,13 @@ public class ShopItem {
 
     public void setRecover(int recover) {
         Recover = recover;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
     }
 }
