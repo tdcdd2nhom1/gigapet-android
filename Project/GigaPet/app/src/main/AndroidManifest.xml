@@ -41,7 +41,8 @@
         <activity
             android:name=".DrinkActivity"
             android:label="@string/title_activity_drink"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".BackgroundActivity"></activity>
     </application>
 
 </manifest>

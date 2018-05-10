@@ -43,8 +43,9 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     private int Check_Interval = 1000 * 60; // 60 seconds, -2 per stats
     private int STATS_DOWN_NUM = 2;
     private boolean isRendered = false;
-    private int REQUEST_TO_EAT = 69;
-    private int REQUEST_TO_DRINK = 70;
+    public static int REQUEST_TO_EAT = 69;
+    public static int REQUEST_TO_DRINK = 70;
+    public static int REQUEST_TO_BACKGROUND = 71;
     private Timer timer = null;
 
     // data user
@@ -424,6 +425,9 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // get back the newest data
+        user = DBAccess.UserRepo.GetByID(UserID);
+
         // Just render again this activity :D
         renderGame();
     }
