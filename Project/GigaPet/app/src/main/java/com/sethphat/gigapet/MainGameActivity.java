@@ -46,6 +46,8 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     public static int REQUEST_TO_EAT = 69;
     public static int REQUEST_TO_DRINK = 70;
     public static int REQUEST_TO_BACKGROUND = 71;
+    private boolean IsToilet = false;
+    private boolean IsBath = false;
     private Timer timer = null;
 
     // data user
@@ -88,6 +90,11 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         // cheat game
         fullStatus();
         evolutionStatus();
+    }
+
+    private void SaveUserState()
+    {
+        DBAccess.UserRepo.Update(user);
     }
 
     /**
@@ -192,6 +199,9 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.btnEat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (IsToilet || IsBath)
+                    return;
+
                 // set data
                 Setting.UserData = user;
 
@@ -203,6 +213,9 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.btnDrink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (IsToilet || IsBath)
+                    return;
+
                 // set data
                 Setting.UserData = user;
 
@@ -279,7 +292,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
             user.setEnergy(user.getEnergy() < decrease ? 0 : user.getEnergy() - decrease);
 
         // save into db
-        DBAccess.UserRepo.Update(user);
+        SaveUserState();
     }
 
     /**
@@ -364,7 +377,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 }
 
                 // db update
-                DBAccess.UserRepo.Update(user);
+                SaveUserState();
 
                 // Declare final boolean
                 final boolean finalIsEvolution = isEvolution;
@@ -409,7 +422,62 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void goToToilet(View view) {
+        if (IsToilet || IsBath)
+            return;
+        if (user.getEnergy() <= DEPRESS_BELOW_STATUS - 10)
+        {
+            Toast.makeText(this, R.string.energy_low_notice, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+
+        // Change background
+        binding.llMainGame.setBackgroundResource(R.drawable.background_toilet);
+        binding.txtPetStatus.setText(R.string.toiletnow);
+        binding.txtPetStatus.setVisibility(View.VISIBLE);
+        binding.imgPet.setVisibility(View.GONE);
+        IsToilet = true;
+
+        // Blink
+        HelperFunction.SetBlinkAnimation(binding.txtPetStatus, 1000);
+
+        // delay task
+        Timer bathTimer = new Timer();
+        bathTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // Back to normal plzz :(
+                user.setGoodFeeling(user.getGoodFeeling() + 3);
+                user.setBladder(user.getBladder() + 30);
+                user.setHygiene(user.getHygiene() - 3);
+                user.setEnergy(user.getEnergy() - 2); // less consume
+
+                // if reach out, we need to fail this
+                if (user.getBladder() > MAX_STATUS)
+                    user.setBladder(MAX_STATUS);
+                if (user.getHygiene() <= 0)
+                    user.setHygiene(0);
+
+                // save
+                SaveUserState();
+                IsToilet = false;
+
+                // UI
+                runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        HelperFunction.ClearAnimation(binding.txtPetStatus);
+                        binding.txtPetStatus.setVisibility(View.GONE);
+                        binding.imgPet.setVisibility(View.VISIBLE);
+
+                        MainGameActivity.this.renderGame();
+
+                        // message
+                        Toast.makeText(MainGameActivity.this, R.string.toilet_finish, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }, TOILET_TIME);
     }
 
     /**
@@ -417,7 +485,58 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void goToBath(View view) {
+        if (IsToilet || IsBath)
+            return;
+        if (user.getEnergy() <= DEPRESS_BELOW_STATUS)
+        {
+            Toast.makeText(this, R.string.energy_low_notice, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        // Change background
+        binding.llMainGame.setBackgroundResource(R.drawable.background_bathroom);
+        binding.txtPetStatus.setText(R.string.bathnow);
+        binding.txtPetStatus.setVisibility(View.VISIBLE);
+        binding.imgPet.setVisibility(View.GONE);
+        IsBath = true;
+
+        // Blink
+        HelperFunction.SetBlinkAnimation(binding.txtPetStatus, 1000);
+
+        // delay task
+        Timer bathTimer = new Timer();
+        bathTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // Back to normal plzz :(
+                user.setGoodFeeling(user.getGoodFeeling() + 5);
+                user.setHygiene(user.getHygiene() + 30);
+                user.setEnergy(user.getEnergy() - 5);
+
+                // if reach out, we need to fail this
+                if (user.getHygiene() > MAX_STATUS)
+                    user.setHygiene(MAX_STATUS);
+
+                // save
+                SaveUserState();
+                IsBath = false;
+
+                // UI
+                runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        HelperFunction.ClearAnimation(binding.txtPetStatus);
+                        binding.txtPetStatus.setVisibility(View.GONE);
+                        binding.imgPet.setVisibility(View.VISIBLE);
+
+                        MainGameActivity.this.renderGame();
+
+                        // message
+                        Toast.makeText(MainGameActivity.this, R.string.bath_finish, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }, BATH_TIME);
     }
 
     /**
@@ -466,7 +585,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         user.setLastTime(HelperFunction.time());
 
         // db update
-        DBAccess.UserRepo.Update(user);
+        SaveUserState();
 
         Log.d("FINALIZATION", "GAME FINISHED AND SAVED!");
 

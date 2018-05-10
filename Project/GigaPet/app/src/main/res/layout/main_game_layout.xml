@@ -127,6 +127,18 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/dog_sprite" />
 
+            <TextView
+                android:id="@+id/txtPetStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Status current pet"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:visibility="gone"/>
+
             <RelativeLayout
                 android:id="@+id/rlGold"
                 android:layout_width="wrap_content"
