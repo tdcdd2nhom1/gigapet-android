@@ -9,6 +9,9 @@
     <string name="DrinkTitle">DRINKING TIME!!</string>
     <string name="BackgroundTitle">NEW BACKGROUND TIME!!</string>
 
+    <string name="tvToTal">Total : </string>
+
+
 
     <!-- Pet status -->
     <string name="hunger">Hunger</string>
@@ -36,11 +39,13 @@
     <string name="setting">Setting</string>
     <string name="up_level_title">HEART INCREASED!</string>
     <string name="evo_title">YOUR PET IS EVOLVING!</string>
+    <string name="namePet">sahara</string>
 
 
     <!-- In game mess -->
     <string name="bad_feeling_notice">Oh no, your pet have bad feeling right now and lost a heart, please take care it carefully!</string>
     <string name="energy_low_notice">Your pet is very tired now, please let it have some rest first!</string>
+
 
     <string name="categories">Category</string>
     <string name="last_time">Last time played: </string>
@@ -49,6 +54,7 @@
     <string name="bath_finish">Few, more cleaner now!!</string>
     <string name="toiletnow">Toilet-ing....</string>
     <string name="toilet_finish">Yay, feel more better now!</string>
+
 
     <string name="intro_title">Developers Introduction</string>
     <string name="introduction"><![CDATA[GigaPet v{version}\n

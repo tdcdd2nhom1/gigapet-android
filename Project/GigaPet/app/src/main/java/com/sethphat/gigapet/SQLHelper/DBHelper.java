@@ -26,59 +26,59 @@ public abstract class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // CREATE DEFAULT DATABASE
         String create_user_table = "CREATE TABLE " + UserHelper.TABLE_NAME + "(" +
-                                        UserHelper.CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                        UserHelper.CL_PetName + " TEXT," +
-                                        UserHelper.CL_Gold + " INTEGER," +
-                                        UserHelper.CL_BackgroundIMG + " INTEGER," +
-                                        UserHelper.CL_Type + " INTEGER DEFAULT 1," +
-                                        UserHelper.CL_Evolution + " INTEGER DEFAULT 1," +
-                                        UserHelper.CL_Heart + " INTEGER," +
-                                        UserHelper.CL_Experience + " INTEGER," +
-                                        UserHelper.CL_PetSkin + " INTEGER DEFAULT 0," +
-                                        UserHelper.CL_Hunger + " INTEGER," +
-                                        UserHelper.CL_Thirsty + " INTEGER," +
-                                        UserHelper.CL_Fun + " INTEGER," +
-                                        UserHelper.CL_Hygiene + " INTEGER," +
-                                        UserHelper.CL_Energy + " INTEGER," +
-                                        UserHelper.CL_Bladder + " INTEGER," +
-                                        UserHelper.CL_IsSleeping + " INTEGER DEFAULT 0," +
-                                        UserHelper.CL_GoodFeeling + " INTEGER DEFAULT 0," +
-                                        UserHelper.CL_BadFeeling + " INTEGER DEFAULT 0," +
-                                        UserHelper.CL_LastTime + " INTEGER" +
-                                    ")";
+                UserHelper.CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                UserHelper.CL_PetName + " TEXT," +
+                UserHelper.CL_Gold + " INTEGER," +
+                UserHelper.CL_BackgroundIMG + " INTEGER," +
+                UserHelper.CL_Type + " INTEGER DEFAULT 1," +
+                UserHelper.CL_Evolution + " INTEGER DEFAULT 1," +
+                UserHelper.CL_Heart + " INTEGER," +
+                UserHelper.CL_Experience + " INTEGER," +
+                UserHelper.CL_PetSkin + " INTEGER DEFAULT 0," +
+                UserHelper.CL_Hunger + " INTEGER," +
+                UserHelper.CL_Thirsty + " INTEGER," +
+                UserHelper.CL_Fun + " INTEGER," +
+                UserHelper.CL_Hygiene + " INTEGER," +
+                UserHelper.CL_Energy + " INTEGER," +
+                UserHelper.CL_Bladder + " INTEGER," +
+                UserHelper.CL_IsSleeping + " INTEGER DEFAULT 0," +
+                UserHelper.CL_GoodFeeling + " INTEGER DEFAULT 0," +
+                UserHelper.CL_BadFeeling + " INTEGER DEFAULT 0," +
+                UserHelper.CL_LastTime + " INTEGER" +
+                ")";
 
         db.execSQL(create_user_table);
 
         // CREATE Table Category
         String create_category_table = "CREATE TABLE " + CategoryHelper.TABLE_NAME + "(" +
-                                            CategoryHelper.CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                            CategoryHelper.CL_Name+ " TEXT," +
-                                            CategoryHelper.CL_Image+ " TEXT" +
-                                        ")";
+                CategoryHelper.CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                CategoryHelper.CL_Name+ " TEXT," +
+                CategoryHelper.CL_Image+ " TEXT" +
+                ")";
 
         db.execSQL(create_category_table);
 
         // CREATE Table ShopItem
         String create_shopitem_table = "CREATE TABLE " + ShopItemHelper.TABLE_NAME + " (" +
-                                            ShopItemHelper.CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                            ShopItemHelper.CL_Name + " TEXT," +
-                                            ShopItemHelper.CL_Description + " TEXT," +
-                                            ShopItemHelper.CL_Price + " INTEGER DEFAULT 0," +
-                                            ShopItemHelper.CL_BackgroundIMG + " INTEGER DEFAULT 0," +
-                                            ShopItemHelper.CL_TypePet + " INTEGER DEFAULT 0," +
-                                            ShopItemHelper.CL_Image+ " TEXT," +
-                                            ShopItemHelper.CL_Evolution+ " INTEGER DEFAULT 0," +
-                                            ShopItemHelper.CL_Recover+ " INTEGER DEFAULT 0" +
-                                        ")";
+                ShopItemHelper.CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                ShopItemHelper.CL_Name + " TEXT," +
+                ShopItemHelper.CL_Description + " TEXT," +
+                ShopItemHelper.CL_Price + " INTEGER DEFAULT 0," +
+                ShopItemHelper.CL_BackgroundIMG + " INTEGER DEFAULT 0," +
+                ShopItemHelper.CL_TypePet + " INTEGER DEFAULT 0," +
+                ShopItemHelper.CL_Image+ " TEXT," +
+                ShopItemHelper.CL_Evolution+ " INTEGER DEFAULT 0," +
+                ShopItemHelper.CL_Recover+ " INTEGER DEFAULT 0" +
+                ")";
 
         db.execSQL(create_shopitem_table);
 
         // CREATE Table UserItem
         String create_useritem_table = "CREATE TABLE " + UserItemHelper.TABLE_NAME + "(" +
-                                            UserItemHelper.CL_UserID + " INTEGER," +
-                                            UserItemHelper.CL_ShopItemID + " INTEGER," +
-                                            UserItemHelper.CL_Quantity + " INTEGER" +
-                                        ")";
+                UserItemHelper.CL_UserID + " INTEGER," +
+                UserItemHelper.CL_ShopItemID + " INTEGER," +
+                UserItemHelper.CL_Quantity + " INTEGER" +
+                ")";
 
         db.execSQL(create_useritem_table);
     }

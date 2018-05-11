@@ -12,13 +12,16 @@ public class SQLiteAccess {
      * Create default stupid data
      */
     public static void CreateDummyData() {
-        // dummy data for category
-        DBAccess.CateRepo.Insert(new Category(0, "Food", 0, "R.drawable.foodtruck"));
-        DBAccess.CateRepo.Insert(new Category(0, "Drink", 0, "R.drawable.icecream"));
-        DBAccess.CateRepo.Insert(new Category(0, "Background", 0, "R.drawable.foodtruck"));
-        DBAccess.CateRepo.Insert(new Category(0, "Clothes/Skins", 0, "R.drawable.foodtruck"));
+        Category infoTruck = new Category(1, "Food", 99, "http://via.placeholder.com/60x60");
+        Category infoDrink = new Category(2, "Drink", 99, "http://via.placeholder.com/60x60");
+        Category infoBackground = new Category(3, "Background", 99, "http://via.placeholder.com/60x60");
+        Category infoSkin = new Category(4, "Clothes/Skins", 99, "http://via.placeholder.com/60x60");
 
-        // dummy data for Background
+
+        DBAccess.CateRepo.Insert(infoTruck);
+        DBAccess.CateRepo.Insert(infoDrink);
+        DBAccess.CateRepo.Insert(infoBackground);
+        DBAccess.CateRepo.Insert(infoSkin);
 
     }
 

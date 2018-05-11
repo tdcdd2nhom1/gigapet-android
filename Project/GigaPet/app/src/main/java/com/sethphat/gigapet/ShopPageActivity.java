@@ -2,17 +2,24 @@ package com.sethphat.gigapet;
 
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sethphat.gigapet.Adapter.ItemAdapter;
+import com.sethphat.gigapet.Common.DBAccess;
+import com.sethphat.gigapet.Configs.IntentKey;
+import com.sethphat.gigapet.Configs.Setting;
 import com.sethphat.gigapet.Models.Category;
-import com.sethphat.gigapet.SQLHelper.CategoryHelper;
+import com.sethphat.gigapet.Models.User;
+import com.sethphat.gigapet.databinding.MainGameLayoutBinding;
 
 import java.util.ArrayList;
 
@@ -21,9 +28,10 @@ public class ShopPageActivity extends AppCompatActivity {
 
     private ListView lvItem;
     ItemAdapter adapter;
-    CategoryHelper categoryHelper;
     private ImageButton btnGoCategories;
     private ArrayList<Category> listCate;
+    TextView tvMoney;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +41,18 @@ public class ShopPageActivity extends AppCompatActivity {
 
         btnGoCategories = (ImageButton) findViewById(R.id.btnGoCategories);
         lvItem = (ListView) findViewById(R.id.lvItem);
+        tvMoney = (TextView) findViewById(R.id.tvMoney);
 
 
-        categoryHelper = new CategoryHelper(this);
+        tvMoney.setText(Setting.DefaultGold + " ");
 
-        listCate = categoryHelper.GetAll();
+        // Retrieve all data
+        listCate = DBAccess.CateRepo.GetAll();
 
-        adapter = new ItemAdapter(this, listCate); //khởi tạo adapter
-        lvItem.setAdapter(adapter); //hiển thị lên listview
+        //Set adapter
+        adapter = new ItemAdapter(this, this, listCate);
+
+        lvItem.setAdapter(adapter);
 
         //set sự kiện khi click vào mỗi item
 
@@ -49,12 +61,10 @@ public class ShopPageActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 //catePage(view);
-                Toast.makeText(ShopPageActivity.this, "Vị trí: " + position, Toast.LENGTH_LONG).show();
+                Toast.makeText(ShopPageActivity.this, "Vị trí: " + position, Toast.LENGTH_SHORT).show();
 
             }
         });
-
-
 
 
     }
@@ -62,7 +72,7 @@ public class ShopPageActivity extends AppCompatActivity {
 
     /**
      * Start new game
-    /**
+     * /**
      * Go to Categories page
      *
      * @param view
@@ -81,7 +91,5 @@ public class ShopPageActivity extends AppCompatActivity {
     public void backMain(View view) {
         onBackPressed();
     }
-
-
 }
 
