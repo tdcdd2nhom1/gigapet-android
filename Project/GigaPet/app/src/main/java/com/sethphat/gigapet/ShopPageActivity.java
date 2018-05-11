@@ -51,6 +51,7 @@ public class ShopPageActivity extends AppCompatActivity {
 
         //Set adapter
         adapter = new ItemAdapter(this, this, listCate);
+        adapter.notifyDataSetChanged();
 
         lvItem.setAdapter(adapter);
 
@@ -59,16 +60,10 @@ public class ShopPageActivity extends AppCompatActivity {
         lvItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                //catePage(view);
-                Toast.makeText(ShopPageActivity.this, "Vị trí: " + position, Toast.LENGTH_SHORT).show();
-
+                catePage(view);
             }
         });
-
-
     }
-
 
     /**
      * Start new game
