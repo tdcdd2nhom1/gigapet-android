@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.sethphat.gigapet.Common.DBAccess;
 import com.sethphat.gigapet.Configs.SQLiteAccess;
+import com.sethphat.gigapet.Models.Category;
 import com.sethphat.gigapet.SQLHelper.CategoryHelper;
 import com.sethphat.gigapet.SQLHelper.ShopItemHelper;
 import com.sethphat.gigapet.SQLHelper.UserHelper;
@@ -32,8 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         DBAccess.UserItemRepo = new UserItemHelper(this);
 
 
-        SQLiteAccess.InitHelper(this);
-        //SQLiteAccess.CreateDummyData();
+        SQLiteAccess.CreateDummyData();
 
         // splash event
         HandlerSplash();

@@ -152,7 +152,6 @@
                     android:layout_margin="8dp"
                     android:gravity="center"
                     android:paddingLeft="5dp"
-                    android:text="99999"
                     android:textColor="#fff" />
             </RelativeLayout>
 
