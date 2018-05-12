@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.sethphat.gigapet.Adapter.ItemAdapter;
 import com.sethphat.gigapet.Common.DBAccess;
 import com.sethphat.gigapet.Configs.IntentKey;
+import com.sethphat.gigapet.Configs.MusicService;
 import com.sethphat.gigapet.Configs.Setting;
 import com.sethphat.gigapet.Models.Category;
 import com.sethphat.gigapet.Models.User;
@@ -44,7 +45,7 @@ public class ShopPageActivity extends AppCompatActivity {
         tvMoney = (TextView) findViewById(R.id.tvMoney);
 
 
-        tvMoney.setText(Setting.DefaultGold + " ");
+        tvMoney.setText(Setting.UserData.getGold() + "");
 
         // Retrieve all data
         listCate = DBAccess.CateRepo.GetAll();
@@ -61,12 +62,13 @@ public class ShopPageActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 //catePage(view);
-                Toast.makeText(ShopPageActivity.this, "Vị trí: " + position, Toast.LENGTH_SHORT).show();
-
+                Intent i = new Intent(ShopPageActivity.this, CategoriesActivity.class);
+                i.putExtra(IntentKey.CATEGORY_ID, listCate.get(position).getID());
+                startActivity(i);
             }
         });
 
-
+        MusicService.PlaySong(this, 4);
     }
 
 
@@ -90,6 +92,13 @@ public class ShopPageActivity extends AppCompatActivity {
      */
     public void backMain(View view) {
         onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // set final
+        setResult(69);
+        finish();
     }
 }
 

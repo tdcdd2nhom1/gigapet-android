@@ -35,6 +35,7 @@ public class CategoryHelper extends DBHelper implements QueryTemplate<Category> 
         // set content
         ContentValues values = new ContentValues();
         values.put(CL_Name, info.getName());
+        values.put(CL_Image, info.getImage());
 
         // insert
         db.insert(TABLE_NAME, null, values);
@@ -92,7 +93,7 @@ public class CategoryHelper extends DBHelper implements QueryTemplate<Category> 
         Category cate = null;
 
         // select only one
-        Cursor qr = db.query(TABLE_NAME, new String[] {CL_ID, CL_Name}, CL_ID + " = ?", new String[] {Integer.toString(id)}, null, null, null);
+        Cursor qr = db.query(TABLE_NAME, new String[] {CL_ID, CL_Name, CL_Image}, CL_ID + " = ?", new String[] {Integer.toString(id)}, null, null, null);
 
         if (qr.moveToFirst())
         {

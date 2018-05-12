@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sethphat.gigapet.Common.HelperFunction;
@@ -37,6 +38,7 @@ public class ShopItemAdapter extends ArrayAdapter<ShopItem> {
         TextView txtName;
         TextView txtDescription;
         TextView txtPrice;
+        LinearLayout llItem;
     }
 
     @NonNull
@@ -62,6 +64,7 @@ public class ShopItemAdapter extends ArrayAdapter<ShopItem> {
             view.txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
             view.txtDescription = (TextView) convertView.findViewById(R.id.txtDescription);
             view.imgItem = (ImageView) convertView.findViewById(R.id.imgItem);
+            view.llItem = (LinearLayout) convertView.findViewById(R.id.llItem);
             convertView.setTag(view);
         }
         else {
@@ -75,12 +78,21 @@ public class ShopItemAdapter extends ArrayAdapter<ShopItem> {
         // set data
         view.txtName.setText(item.getName());
         view.txtDescription.setText(item.getDescription());
-        view.txtPrice.setText(item.getPrice());
+        view.txtPrice.setText(item.getPrice() + "");
 
-        if (!isBackground)
-            view.imgItem.setImageDrawable(Setting.GetImageShopItem(context, item.getImage()));
-        else
-            view.imgItem.setImageDrawable(Setting.GetBackgroundImg(context, item.getImage()));
+        if (isBackground){
+            view.imgItem.setVisibility(View.GONE);
+            view.llItem.setBackground(Setting.GetBackgroundImg(context, item.getBackgroundIMG() + ".png"));
+            view.llItem.getLayoutParams().height = 300;
+        }
+        else {
+            // Skin
+            view.imgItem.setVisibility(View.VISIBLE);
+            if (item.getCategoryID() == Setting.SKIN_CATEGORY)
+                view.imgItem.setImageDrawable(Setting.PetImage(context, item.getTypePet(), item.getEvolution(), item.getBackgroundIMG()));
+            else
+                view.imgItem.setImageDrawable(Setting.GetImageShopItem(context, item.getImage()));
+        }
 
         return convertView;
     }

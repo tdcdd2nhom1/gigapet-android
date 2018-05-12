@@ -87,7 +87,7 @@ public class StartNewActivity extends AppCompatActivity {
         User obj = new User();
 
         // set default data
-        obj.setBackgroundIMG(0);
+        obj.setBackgroundIMG(1);
         obj.setGold(Setting.DefaultGold);
         obj.setEvolution(1);
         obj.setHeart(0);
@@ -111,6 +111,7 @@ public class StartNewActivity extends AppCompatActivity {
 
         // open page
         if (obj.getID() > 0) {
+            // next page
             Intent i = new Intent(StartNewActivity.this, MainGameActivity.class);
             i.putExtra(IntentKey.USER_ID, obj.getID());
             startActivity(i);

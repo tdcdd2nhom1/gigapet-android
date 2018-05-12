@@ -83,6 +83,23 @@ public class UserItemHelper extends DBHelper implements QueryTemplate<UserItem> 
         return list;
     }
 
+    public UserItem FindItem(int user_id, int shop_item_id)
+    {
+        UserItem item = null;
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor qr = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + CL_UserID + " = ? AND " + CL_ShopItemID + " = ?",
+                new String[] {Integer.toString(user_id), shop_item_id + ""});
+
+        if (qr.moveToFirst())
+        {
+            int quantity = qr.getInt(qr.getColumnIndex(CL_Quantity));
+            item = new UserItem(user_id, shop_item_id, quantity);
+        }
+
+        return item;
+    }
+
     // ko xai
     @Override
     public ArrayList<UserItem> GetAll() {

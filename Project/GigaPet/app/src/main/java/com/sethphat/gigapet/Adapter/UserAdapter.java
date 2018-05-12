@@ -72,7 +72,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         // set data
         view.txtPetName.setText(user.getPetName());
-        view.txtDate.setText(context.getString(R.string.last_time) + HelperFunction.date(Setting.DATE_FORMAT, user.getLastTime()));
+        view.txtDate.setText(context.getString(R.string.last_time) + " " + HelperFunction.date(Setting.DATE_FORMAT, user.getLastTime()));
         view.imgPet.setImageDrawable(Setting.PetImage(context, user.getType(), user.getEvolution(), user.getPetSkin()));
 
         return convertView;

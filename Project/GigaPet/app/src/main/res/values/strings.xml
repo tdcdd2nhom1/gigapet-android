@@ -7,10 +7,10 @@
     <string name="ChoosePet">CHOOSE YOUR PET</string>
     <string name="EatTitle">EATING TIME!!</string>
     <string name="DrinkTitle">DRINKING TIME!!</string>
+    <string name="SkinTitle">NEW SKIN TIME!!</string>
     <string name="BackgroundTitle">NEW BACKGROUND TIME!!</string>
 
     <string name="tvToTal">Total : </string>
-
 
 
     <!-- Pet status -->
@@ -28,11 +28,13 @@
     <string name="sound">Sound</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="current_background">Current Background</string>
 
 
     <!-- err mess -->
     <string name="err_mess_input_name">Please input your name before start new!</string>
     <string name="err_mess_failed_new_game">Failed to create a new game, please try again!</string>
+    <string name="err_cantdo">You cant do this action right now!</string>
 
     <!-- Header -->
     <string name="shop">Shop</string>
@@ -54,6 +56,18 @@
     <string name="bath_finish">Few, more cleaner now!!</string>
     <string name="toiletnow">Toilet-ing....</string>
     <string name="toilet_finish">Yay, feel more better now!</string>
+    <string name="money_not_enough">You dont have enough money to buy this item!</string>
+    <string name="background_existed">You already had this background!</string>
+    <string name="buy_ok">You have just bought a new item!</string>
+    <string name="confirm_buy_title">Buy item?</string>
+    <string name="confirm_buy_body">Do you want to buy this item?</string>
+    <string name="sleeping_text">Sleeping, dreaming....</string>
+    <string name="eat_success">Your pet have just eaten 1 item!</string>
+    <string name="drink_success">Your pet have just drunk 1 item!</string>
+    <string name="skin_success">Your pet have changed to a new skin!</string>
+    <string name="confirm_use_title">Use this item?</string>
+    <string name="confirm_use_body">Do you want to use this item?</string>
+    <string name="item_out">You dont have any of this item left, please buy more!</string>
 
 
     <string name="intro_title">Developers Introduction</string>

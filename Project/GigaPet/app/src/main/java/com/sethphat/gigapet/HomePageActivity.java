@@ -2,13 +2,20 @@ package com.sethphat.gigapet;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.sethphat.gigapet.Configs.MusicService;
+import com.sethphat.gigapet.Configs.SQLiteAccess;
 import com.sethphat.gigapet.Configs.Setting;
+
+import java.io.IOException;
 
 public class HomePageActivity extends AppCompatActivity {
 
@@ -16,6 +23,8 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page_layout);
+
+        MusicService.PlaySong(this, 1);
     }
 
     /**
@@ -62,6 +71,9 @@ public class HomePageActivity extends AppCompatActivity {
      * @param view
      */
     public void showInfo(View view) {
+
+        SQLiteAccess.CreateDummyData();
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
         dialog.setTitle(R.string.intro_title);
@@ -83,7 +95,7 @@ public class HomePageActivity extends AppCompatActivity {
      */
     public void showSetting(View view) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Cài đặt");
+        dialog.setTitle(R.string.setting);
 
         // view
         View v = getLayoutInflater().inflate(R.layout.dialog_setting, null);
@@ -107,10 +119,12 @@ public class HomePageActivity extends AppCompatActivity {
                     isOn = false;
 
                 Setting.setIsSoundOn(isOn);
+                MusicService.TurnMusic();
             }
         });
 
         dialog.setNegativeButton("Cancel", null);
         dialog.show();
     }
+
 }

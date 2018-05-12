@@ -8,6 +8,7 @@ public class UserItem {
     private int UserID;
     private int ShopItemID;
     private int Quantity;
+    private ShopItem ShopItemObj;
 
     // use for foreign
     private ShopItem Item = null;
@@ -48,5 +49,13 @@ public class UserItem {
 
     public void setUserID(int userID) {
         UserID = userID;
+    }
+
+    public ShopItem getShopItemObj() {
+        return ShopItemObj;
+    }
+
+    public void setShopItemObj(ShopItem shopItemObj) {
+        ShopItemObj = shopItemObj;
     }
 }

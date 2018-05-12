@@ -5,6 +5,9 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 
+import com.sethphat.gigapet.Models.ShopItem;
+import com.sethphat.gigapet.Models.UserItem;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,5 +45,13 @@ public class HelperFunction {
     public static void ClearAnimation(View v)
     {
         v.clearAnimation();
+    }
+
+    public static UserItem GetDefaultBackground(int user_id)
+    {
+        UserItem item = new UserItem(user_id, 0, 1);
+        item.setShopItemObj(new ShopItem(0, 4, "Default Background", "Basic background [Free]", 0, 1, 0, 0, 0));
+
+        return item;
     }
 }

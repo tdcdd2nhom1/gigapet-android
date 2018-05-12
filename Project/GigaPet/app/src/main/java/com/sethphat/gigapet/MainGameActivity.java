@@ -3,6 +3,10 @@ package com.sethphat.gigapet;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +25,7 @@ import com.sethphat.gigapet.Common.FontChangeCrawler;
 import com.sethphat.gigapet.Common.HelperFunction;
 import com.sethphat.gigapet.Common.OnSwipeTouchListener;
 import com.sethphat.gigapet.Configs.IntentKey;
+import com.sethphat.gigapet.Configs.MusicService;
 import com.sethphat.gigapet.Configs.PetExperience;
 import com.sethphat.gigapet.Configs.SQLiteAccess;
 import com.sethphat.gigapet.Configs.Setting;
@@ -30,13 +35,16 @@ import com.sethphat.gigapet.databinding.MainGameLayoutBinding;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MainGameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener,GestureDetector.OnDoubleTapListener {
     // default config
     private int UserID = 0;
     private int MAX_STATUS = 100;
     private int DEPRESS_BELOW_STATUS = 20; // if the stats below this one, depression of the pet will come up.
-    private int MAX_FEELING = 5;
+    private int MAX_FEELING = 15;
     private int MAX_GOOD_FEELING = 20;
     private int TOILET_TIME = 1000 * 10; // 10 seconds
     private int BATH_TIME = 1000 * 30; //30 seconds
@@ -48,10 +56,18 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     public static int REQUEST_TO_BACKGROUND = 71;
     private boolean IsToilet = false;
     private boolean IsBath = false;
+
+    // cron job
     private Timer timer = null;
+    private ScheduledExecutorService execService = null;
 
     // data user
     private User user = null;
+
+    // soundpool
+    MediaPlayer mediaPlayer;
+    SoundPool soundPool;
+    private int MAX_SOUND = 5;
 
     // layout data binding
     MainGameLayoutBinding binding;
@@ -81,6 +97,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         // show welcome message
         Toast.makeText(this, R.string.welcome_mess, Toast.LENGTH_SHORT).show();
 
+
         // update info from the last login to now
         UpdateFromLastOpen();
 
@@ -94,6 +111,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
 
     private void SaveUserState()
     {
+        user.setLastTime(HelperFunction.time());
         DBAccess.UserRepo.Update(user);
     }
 
@@ -147,6 +165,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                     isOn = false;
 
                 Setting.setIsSoundOn(isOn);
+                MusicService.TurnMusic();
             }
         });
 
@@ -162,6 +181,11 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         // set pet info
         binding.txtPetName.setText(user.getPetName() + "");
         binding.txtMoney.setText(user.getGold() + "");
+
+        // clear var
+        binding.imgPet.setVisibility(View.VISIBLE);
+        HelperFunction.ClearAnimation(binding.txtPetStatus);
+        binding.txtPetStatus.setVisibility(View.GONE);
 
         // render heart
         binding.llHeartPanel.removeAllViews();
@@ -180,27 +204,28 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         if (user.getIsSleeping() > 0)
             binding.llMainGame.setBackgroundResource(R.drawable.background_sleep);
         else
-            binding.llMainGame.setBackgroundResource(Setting.BackgroundImgRes(user.getBackgroundIMG()));
+            binding.llMainGame.setBackground(Setting.BackgroundImgRes(this, user.getBackgroundIMG()));
 
         // set pet image
         binding.imgPet.setImageDrawable(Setting.PetImage(this, user.getType(), user.getEvolution(), user.getPetSkin()));
-
-        // okay then, running interval check
-        AutoUpdateStats();
-
 
         // EVENT:
         binding.imgPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Play pet sound
+                int random_sound = Setting.GetRandomPetSound(user.getType());
+                mediaPlayer = MediaPlayer.create(MainGameActivity.this, random_sound);
+                mediaPlayer.start();
             }
         });
         binding.btnEat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (IsToilet || IsBath)
+                if (IsToilet || IsBath || user.getIsSleeping() == 1)
+                {
+                    Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
                     return;
+                }
 
                 // set data
                 Setting.UserData = user;
@@ -213,8 +238,11 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.btnDrink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (IsToilet || IsBath)
+                if (IsToilet || IsBath || user.getIsSleeping() == 1)
+                {
+                    Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
                     return;
+                }
 
                 // set data
                 Setting.UserData = user;
@@ -224,9 +252,50 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 startActivityForResult(intent, REQUEST_TO_DRINK);
             }
         });
+        binding.btnBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (IsToilet || IsBath || user.getIsSleeping() == 1)
+                {
+                    Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // set data
+                Setting.UserData = user;
+
+                // send intent
+                Intent intent = new Intent(MainGameActivity.this, BackgroundActivity.class);
+                startActivityForResult(intent, REQUEST_TO_BACKGROUND);
+            }
+        });
+        binding.btnSkin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (IsToilet || IsBath || user.getIsSleeping() == 1)
+                {
+                    Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // set data
+                Setting.UserData = user;
+
+                // send intent
+                Intent intent = new Intent(MainGameActivity.this, SkinActivity.class);
+                startActivityForResult(intent, REQUEST_TO_BACKGROUND);
+            }
+        });
 
         // finalization render
         isRendered = true;
+
+        // okay then, running interval check
+        if (execService == null || execService.isShutdown())
+            AutoUpdateStats();
+
+        // music
+        MusicService.PlaySong(this, 2);
     }
 
     /**
@@ -262,7 +331,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     private void UpdateFromLastOpen()
     {
         // we calculate the time now to the time user left
-        int timeLength =HelperFunction.time() - user.getLastTime();
+        int timeLength = HelperFunction.time() - user.getLastTime();
 
         // we need to calculate it into minutes :D
         int minutes = timeLength / Check_Interval;
@@ -285,7 +354,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         if (user.getIsSleeping() > 0)
         {
             user.setEnergy((user.getEnergy() + (decrease / 2) > 100) ? 100 : user.getEnergy() + (decrease / 2));
-            if (user.getEnergy() > 100)
+            if (user.getEnergy() >= MAX_STATUS)
                 user.setIsSleeping(0);
         }
         else
@@ -300,13 +369,16 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      */
     private void AutoUpdateStats()
     {
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
+        execService = Executors.newScheduledThreadPool(1);
+        execService.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+
                 int BadFeeling = 0;
                 boolean isUpLevel = false;
                 boolean isEvolution = false;
+                boolean isBadFeeling = false;
+                boolean isWakingUp = false;
 
                 // set
                 user.setHunger((user.getHunger() - 2 >= 0) ? user.getHunger() - 2 : 0);
@@ -320,6 +392,13 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                     user.setEnergy(user.getEnergy() - 2);
                 else
                     user.setEnergy(user.getEnergy() + 1);
+
+                if (user.getEnergy() >= MAX_STATUS)
+                {
+                    user.setEnergy(MAX_STATUS);
+                    user.setIsSleeping(0);
+                    isWakingUp = true;
+                }
 
                 // solving bad feeling
                 if (user.getHunger() < DEPRESS_BELOW_STATUS)
@@ -347,7 +426,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 if (user.getBadFeeling() >= MAX_FEELING)
                 {
                     user.setHeart(user.getHeart() > 0 ? user.getHeart()-1 : 0);
-                    Toast.makeText(MainGameActivity.this, R.string.bad_feeling_notice, Toast.LENGTH_SHORT).show();
+                    isBadFeeling = true;
                 }
 
                 // Up level processing - Up heart
@@ -382,6 +461,8 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 // Declare final boolean
                 final boolean finalIsEvolution = isEvolution;
                 final boolean finalIsUpLevel = isUpLevel;
+                final boolean finalIsBadFeeling = isBadFeeling;
+                final boolean finalIsWakingUp = isWakingUp;
 
                 // run task UI
                 runOnUiThread(new Runnable() {
@@ -398,13 +479,20 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                         {
                             MainGameActivity.this.UpLevelDialog();
                         }
+
+                        if(finalIsBadFeeling)
+                            Toast.makeText(MainGameActivity.this, R.string.bad_feeling_notice, Toast.LENGTH_SHORT).show();
+
+                        if (finalIsWakingUp)
+                            renderGame();
                     }
                 });
 
                 // log to know status
                 Log.d("STATUS_CHANGED", "Changed pet status now!!!");
             }
-        }, 0, Check_Interval);
+        }, 0, Check_Interval, TimeUnit.MILLISECONDS);
+
     }
 
     /**
@@ -413,8 +501,9 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void shopPage(View view) {
+        Setting.UserData = user;
         Intent i = new Intent(MainGameActivity.this, ShopPageActivity.class);
-        startActivity(i);
+        startActivityForResult(i, REQUEST_TO_BACKGROUND);
     }
 
     /**
@@ -422,8 +511,12 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void goToToilet(View view) {
-        if (IsToilet || IsBath)
+        if (IsToilet || IsBath || user.getIsSleeping() == 1)
+        {
+            Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
             return;
+        }
+
         if (user.getEnergy() <= DEPRESS_BELOW_STATUS - 10)
         {
             Toast.makeText(this, R.string.energy_low_notice, Toast.LENGTH_SHORT).show();
@@ -485,8 +578,12 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void goToBath(View view) {
-        if (IsToilet || IsBath)
+        if (IsToilet || IsBath || user.getIsSleeping() == 1)
+        {
+            Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
             return;
+        }
+
         if (user.getEnergy() <= DEPRESS_BELOW_STATUS)
         {
             Toast.makeText(this, R.string.energy_low_notice, Toast.LENGTH_SHORT).show();
@@ -540,12 +637,34 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     }
 
     /**
+     * Go to bed time
+     * @param view
+     */
+    public void goToBed(View view) {
+        if (user.getIsSleeping() == 1)
+            return;
+
+        // set to sleep now
+        binding.llMainGame.setBackgroundResource(R.drawable.background_sleep);
+        binding.txtPetStatus.setText(R.string.sleeping_text);
+        binding.txtPetStatus.setVisibility(View.VISIBLE);
+        binding.imgPet.setVisibility(View.GONE);
+
+        // update status
+        user.setIsSleeping(1);
+        SaveUserState();
+    }
+
+    /**
      * On result activity back
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // get back the newest data
         user = DBAccess.UserRepo.GetByID(UserID);
+
+        // Log
+        Log.d("MAIN_GAME_RESULT", "Come back main page now...!");
 
         // Just render again this activity :D
         renderGame();
@@ -559,8 +678,8 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         super.onPause();
 
         // stop timer
-        if(timer != null)
-            timer.cancel();
+        if(execService != null && execService.isShutdown() == false)
+            execService.shutdown();
 
         Log.d("SYSTEM_TRACKING", "Paused Activity");
     }
@@ -570,7 +689,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         super.onResume();
 
         // only resume if the page already rendered (which mean don't cost us an both time running, annoying ehhh)
-        if (isRendered)
+        if (isRendered && execService.isShutdown() == true)
             AutoUpdateStats();
 
         Log.d("SYSTEM_TRACKING", "Resume Activity");
@@ -581,6 +700,8 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      */
     @Override
     protected void onDestroy() {
+        execService.shutdown();
+
         // update the last access time
         user.setLastTime(HelperFunction.time());
 
@@ -722,5 +843,4 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
-
 }

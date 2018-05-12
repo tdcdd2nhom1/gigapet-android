@@ -17,6 +17,7 @@
             android:layout_margin="5dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:onClick="backMain"
             android:background="@drawable/selector_back_main"
             />
 
@@ -29,6 +30,7 @@
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/continue_font_size"
             android:textStyle="bold"
+            android:textColor="@color/colorShop"
             />
     </RelativeLayout>
 

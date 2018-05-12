@@ -1,6 +1,7 @@
 package com.sethphat.gigapet;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,8 +33,8 @@ public class SplashActivity extends AppCompatActivity {
         DBAccess.ShopItem = new ShopItemHelper(this);
         DBAccess.UserItemRepo = new UserItemHelper(this);
 
-
-        SQLiteAccess.CreateDummyData();
+        // Play a sound
+        MediaPlayer.create(this, R.raw.eve2).start();
 
         // splash event
         HandlerSplash();

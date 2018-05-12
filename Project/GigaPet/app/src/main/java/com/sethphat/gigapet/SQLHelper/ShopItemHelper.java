@@ -41,12 +41,14 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
 
         ContentValues values = new ContentValues();
         values.put(CL_Name, info.getName());
+        values.put(CL_CategoryID, info.getCategoryID());
         values.put(CL_Description, info.getDescription());
         values.put(CL_Price, info.getPrice());
         values.put(CL_BackgroundIMG, info.getBackgroundIMG());
         values.put(CL_TypePet, info.getTypePet());
         values.put(CL_Evolution, info.getEvolution());
         values.put(CL_Recover, info.getRecover());
+        values.put(CL_Image, info.getImage());
 
         db.insert(TABLE_NAME, null, values);
     }
@@ -57,12 +59,14 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
 
         ContentValues values = new ContentValues();
         values.put(CL_Name, info.getName());
+        values.put(CL_CategoryID, info.getCategoryID());
         values.put(CL_Description, info.getDescription());
         values.put(CL_Price, info.getPrice());
         values.put(CL_BackgroundIMG, info.getBackgroundIMG());
         values.put(CL_TypePet, info.getTypePet());
         values.put(CL_Evolution, info.getEvolution());
         values.put(CL_Recover, info.getRecover());
+        values.put(CL_Image, info.getImage());
 
         db.update(TABLE_NAME, values, CL_ID + " = ?", new String[] {Integer.toString(info.getID())});
     }
@@ -93,9 +97,11 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
                 int background = qr.getInt(qr.getColumnIndex(CL_BackgroundIMG));
                 int evolution = qr.getInt(qr.getColumnIndex(CL_Evolution));
                 int recover = qr.getInt(qr.getColumnIndex(CL_Recover));
+                String img = qr.getString(qr.getColumnIndex(CL_Image));
 
                 // new obj
                 ShopItem item = new ShopItem(id, cate_id, name, desc, price, background, typePet, evolution, recover);
+                item.setImage(img);
                 arrItems.add(item);
             }
             while (qr.moveToNext());
@@ -123,22 +129,33 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
             int background = qr.getInt(qr.getColumnIndex(CL_BackgroundIMG));
             int evolution = qr.getInt(qr.getColumnIndex(CL_Evolution));
             int recover = qr.getInt(qr.getColumnIndex(CL_Recover));
+            String img = qr.getString(qr.getColumnIndex(CL_Image));
 
             // new obj
             item = new ShopItem(id, cate_id, name, desc, price, background, typePet, evolution, recover);
+            item.setImage(img);
         }
 
         qr.close();
         return item;
     }
 
-    public ArrayList<ShopItem> GetByCategory(int cate_id)
+    public ArrayList<ShopItem> GetByCategory(int cate_id, int type_pet, int evo)
     {
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<ShopItem> arrItems = new ArrayList<>();
 
         // query
-        Cursor qr = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + CL_CategoryID + " = ?", new String[] {Integer.toString(cate_id)}, null);
+        Cursor qr;
+        if (type_pet == 0 && evo == 0)
+            qr = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + CL_CategoryID + " = ?",
+                    new String[] {Integer.toString(cate_id)}, null);
+        else if (type_pet != 0 && evo == 0)
+            qr = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + CL_CategoryID + " = ? AND ("+CL_TypePet+" = ? OR " + CL_TypePet + " = 0)",
+                    new String[] {cate_id+"", type_pet+""}, null);
+        else
+            qr = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + CL_CategoryID + " = ? AND ("+CL_TypePet+" = ? OR "+CL_TypePet+" = 0) AND " + CL_Evolution + " <= ?",
+                    new String[] {cate_id+"", type_pet+"", evo+""}, null);
 
         if (qr.moveToFirst())
         {
@@ -151,9 +168,11 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
                 int background = qr.getInt(qr.getColumnIndex(CL_BackgroundIMG));
                 int evolution = qr.getInt(qr.getColumnIndex(CL_Evolution));
                 int recover = qr.getInt(qr.getColumnIndex(CL_Recover));
+                String img = qr.getString(qr.getColumnIndex(CL_Image));
 
                 // new obj
                 ShopItem item = new ShopItem(id, cate_id, name, desc, price, background, typePet, evolution, recover);
+                item.setImage(img);
                 arrItems.add(item);
             }
             while (qr.moveToNext());
@@ -165,7 +184,7 @@ public class ShopItemHelper extends DBHelper implements QueryTemplate<ShopItem> 
 
     public static long countAllInCategory(SQLiteDatabase db, int cate_id)
     {
-        long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
+        long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME, CL_CategoryID + " = ?", new String[] {cate_id+""});
         return count;
     }
 }

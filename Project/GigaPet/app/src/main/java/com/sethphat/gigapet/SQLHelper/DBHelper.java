@@ -63,6 +63,7 @@ public abstract class DBHelper extends SQLiteOpenHelper {
                 ShopItemHelper.CL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ShopItemHelper.CL_Name + " TEXT," +
                 ShopItemHelper.CL_Description + " TEXT," +
+                ShopItemHelper.CL_CategoryID + " INTEGER," +
                 ShopItemHelper.CL_Price + " INTEGER DEFAULT 0," +
                 ShopItemHelper.CL_BackgroundIMG + " INTEGER DEFAULT 0," +
                 ShopItemHelper.CL_TypePet + " INTEGER DEFAULT 0," +

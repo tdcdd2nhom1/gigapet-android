@@ -71,6 +71,18 @@
                 android:onClick="goToBath"
                 android:src="@drawable/selector_shower" />
 
+            <ImageButton
+                android:id="@+id/btnBed"
+                android:layout_width="@dimen/sideIMGSize"
+                android:layout_height="@dimen/sideIMGSize"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/btnShower"
+                android:layout_margin="@dimen/sideIMGMargin"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:onClick="goToBed"
+                android:src="@drawable/ico_bed" />
+
 
             <!-- Button player right -->
             <ImageButton
@@ -105,6 +117,28 @@
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
                 android:src="@drawable/selector_drink" />
+
+            <ImageButton
+                android:id="@+id/btnBackground"
+                android:layout_width="@dimen/sideIMGSize"
+                android:layout_height="@dimen/sideIMGSize"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/btnDrink"
+                android:layout_margin="@dimen/sideIMGMargin"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/selector_board" />
+
+            <ImageButton
+                android:id="@+id/btnSkin"
+                android:layout_width="@dimen/sideIMGSize"
+                android:layout_height="@dimen/sideIMGSize"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/btnBackground"
+                android:layout_margin="@dimen/sideIMGMargin"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ico_wardrobe" />
 
             <!-- PET Info -->
 
