@@ -45,6 +45,7 @@ public class MusicService {
         try {
             media = new MediaPlayer();
             media.setDataSource(source_music.getFileDescriptor(), source_music.getStartOffset(), source_music.getLength());
+            media.setVolume(0.6f, 0.6f);
             media.prepare();
             media.start();
         } catch (IOException e) {

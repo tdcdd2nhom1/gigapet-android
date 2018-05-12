@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.sethphat.gigapet.Common.DBAccess;
 import com.sethphat.gigapet.Configs.SQLiteAccess;
+import com.sethphat.gigapet.Configs.Setting;
 import com.sethphat.gigapet.Models.Category;
 import com.sethphat.gigapet.SQLHelper.CategoryHelper;
 import com.sethphat.gigapet.SQLHelper.ShopItemHelper;
@@ -20,7 +21,8 @@ import com.sethphat.gigapet.SQLHelper.UserHelper;
 import com.sethphat.gigapet.SQLHelper.UserItemHelper;
 
 public class SplashActivity extends AppCompatActivity {
-    private final int TIME_OUT = 3000; // 5 seconds
+    private final int TIME_OUT = 3000; // 3 seconds
+    MediaPlayer media = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,9 @@ public class SplashActivity extends AppCompatActivity {
         DBAccess.UserItemRepo = new UserItemHelper(this);
 
         // Play a sound
-        MediaPlayer.create(this, R.raw.eve2).start();
+        MediaPlayer media = MediaPlayer.create(this, Setting.GetRandomPetSound(1));
+        media.start();
+
 
         // splash event
         HandlerSplash();

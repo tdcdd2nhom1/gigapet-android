@@ -774,6 +774,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 setCurrentStatus();
 
                 Log.d("CHEAT_ACTIVATED", "CHEATED #1!");
+                Toast.makeText(MainGameActivity.this, "Cheated full status", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -788,12 +789,16 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.txtPetName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                // increase 100 GOOD FEELING
+                // increase 100 GOOD FEELING and 500 gold
                 user.setGoodFeeling(user.getGoodFeeling() + 100);
+                user.setGold(user.getGold() + 500);
+                binding.txtMoney.setText(user.getGold() + "");
 
                 // db update
                 DBAccess.UserRepo.Update(user);
                 Log.d("CHEAT_ACTIVATED", "CHEATED #2!");
+
+                Toast.makeText(MainGameActivity.this, "Cheated good feeling and gold", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GigaPet</string>
-    <string name="game_version">0.1.2</string>
+    <string name="game_version">0.1.3</string>
 
     <string name="OpenSaveHelp">CONTINUE</string>
     <string name="StartNewHelp">START NEW GAME</string>

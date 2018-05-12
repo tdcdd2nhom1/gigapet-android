@@ -32,6 +32,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="@dimen/sideIMGMargin"
+                android:onClick="showSetting"
                 android:background="@drawable/ico_setting" />
 
             <!-- Button player left -->
