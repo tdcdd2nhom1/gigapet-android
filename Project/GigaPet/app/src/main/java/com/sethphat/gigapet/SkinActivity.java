@@ -31,15 +31,26 @@ public class SkinActivity extends AppCompatActivity {
 
         // Get current user item
         items = DBAccess.UserItemRepo.GetAllByUserID(Setting.UserData.getID());
+        initDefaultSkin();
         Iterator<UserItem> iter = items.iterator();
 
-        // filter for Food only
+        // filter for Skin only
         while (iter.hasNext())
         {
             UserItem item = iter.next();
+            if (item.getShopItemObj() != null)
+                continue;
+
+            // get shop item
             ShopItem shopItem = DBAccess.ShopItem.GetByID(item.getShopItemID());
 
             if (shopItem == null || shopItem.getCategoryID() != Setting.SKIN_CATEGORY)
+            {
+                iter.remove();
+                continue;
+            }
+
+            if (shopItem.getEvolution() != Setting.UserData.getEvolution())
             {
                 iter.remove();
                 continue;
@@ -98,9 +109,24 @@ public class SkinActivity extends AppCompatActivity {
         // change pet skin
         Setting.UserData.setPetSkin(item.getShopItemObj().getBackgroundIMG());
         DBAccess.UserRepo.Update(Setting.UserData);
+        adapter.notifyDataSetChanged();
 
         // Mess
         Toast.makeText(this, R.string.skin_success, Toast.LENGTH_SHORT).show();
+    }
+
+    private void initDefaultSkin()
+    {
+        ShopItem default_level1 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 1", "Default skin in evolution 1", 0, 0, 1, 1, 0);
+        ShopItem default_level2 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 2", "Default skin in evolution 1", 0, 0, 1, 2, 0);
+        ShopItem default_level3 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 3", "Default skin in evolution 1", 0, 0, 1, 3, 0);
+
+        if (Setting.UserData.getEvolution() <= 1)
+            items.add(new UserItem(Setting.UserData.getID(), 0,0, default_level1));
+        if (Setting.UserData.getEvolution() <= 2)
+            items.add(new UserItem(Setting.UserData.getID(), 0,0, default_level2));
+        if (Setting.UserData.getEvolution() <= 3)
+            items.add(new UserItem(Setting.UserData.getID(), 0,0, default_level3));
     }
 
     /**

@@ -8,7 +8,7 @@ public class UserItem {
     private int UserID;
     private int ShopItemID;
     private int Quantity;
-    private ShopItem ShopItemObj;
+    private ShopItem ShopItemObj = null;
 
     // use for foreign
     private ShopItem Item = null;
@@ -17,6 +17,13 @@ public class UserItem {
         this.UserID = userID;
         ShopItemID = shopItemID;
         Quantity = quantity;
+    }
+
+    public UserItem(int userID, int shopItemID, int quantity, ShopItem shopitem) {
+        this.UserID = userID;
+        ShopItemID = shopItemID;
+        Quantity = quantity;
+        ShopItemObj = shopitem;
     }
 
     public int getShopItemID() {

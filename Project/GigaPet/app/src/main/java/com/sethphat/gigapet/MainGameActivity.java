@@ -44,10 +44,12 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     private int UserID = 0;
     private int MAX_STATUS = 100;
     private int DEPRESS_BELOW_STATUS = 20; // if the stats below this one, depression of the pet will come up.
+    public static int PUBLIC_DEPRESS = 20;
     private int MAX_FEELING = 15;
     private int MAX_GOOD_FEELING = 20;
     private int TOILET_TIME = 1000 * 10; // 10 seconds
     private int BATH_TIME = 1000 * 30; //30 seconds
+    private int GO_OUT_TIME = 1000 * 10; // 10 seconds
     private int Check_Interval = 1000 * 60; // 60 seconds, -2 per stats
     private int STATS_DOWN_NUM = 2;
     private boolean isRendered = false;
@@ -56,6 +58,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     public static int REQUEST_TO_BACKGROUND = 71;
     private boolean IsToilet = false;
     private boolean IsBath = false;
+    private boolean IsGoOut = false;
 
     // cron job
     private Timer timer = null;
@@ -107,6 +110,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         // cheat game
         fullStatus();
         evolutionStatus();
+        decreaseStatus();
     }
 
     private void SaveUserState()
@@ -202,9 +206,26 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
 
         // set background image
         if (user.getIsSleeping() > 0)
+        {
             binding.llMainGame.setBackgroundResource(R.drawable.background_sleep);
-        else
+            binding.imgPet.setVisibility(View.GONE);
+            binding.txtPetStatus.setText(R.string.sleeping_text);
+            HelperFunction.SetBlinkAnimation(binding.txtPetStatus, 1000);
+            binding.txtPetStatus.setVisibility(View.VISIBLE);
+        }
+        else{
             binding.llMainGame.setBackground(Setting.BackgroundImgRes(this, user.getBackgroundIMG()));
+            HelperFunction.ClearAnimation(binding.txtPetStatus);
+            binding.txtPetStatus.setVisibility(View.GONE);
+            binding.imgPet.setVisibility(View.VISIBLE);
+        }
+
+
+        // check if user have bad feeling yeah
+        if (HelperFunction.IsHaveBadFeeling(user))
+            binding.txtBadFeeling.setVisibility(View.VISIBLE);
+        else
+            binding.txtBadFeeling.setVisibility(View.GONE);
 
         // set pet image
         binding.imgPet.setImageDrawable(Setting.PetImage(this, user.getType(), user.getEvolution(), user.getPetSkin()));
@@ -216,12 +237,27 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 int random_sound = Setting.GetRandomPetSound(user.getType());
                 mediaPlayer = MediaPlayer.create(MainGameActivity.this, random_sound);
                 mediaPlayer.start();
+
+                // rotate img
+                HelperFunction.SetRotateAnimation(MainGameActivity.this, binding.imgPet, 1000);
+
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new TimerTask() {
+                            @Override
+                            public void run() {
+                                HelperFunction.ClearAnimation(binding.imgPet);
+                            }
+                        });
+                    }
+                }, 1000);
             }
         });
         binding.btnEat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (IsToilet || IsBath || user.getIsSleeping() == 1)
+                if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
                 {
                     Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
                     return;
@@ -238,7 +274,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.btnDrink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (IsToilet || IsBath || user.getIsSleeping() == 1)
+                if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
                 {
                     Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
                     return;
@@ -255,7 +291,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.btnBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (IsToilet || IsBath || user.getIsSleeping() == 1)
+                if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
                 {
                     Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
                     return;
@@ -272,7 +308,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.btnSkin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (IsToilet || IsBath || user.getIsSleeping() == 1)
+                if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
                 {
                     Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
                     return;
@@ -379,6 +415,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 boolean isEvolution = false;
                 boolean isBadFeeling = false;
                 boolean isWakingUp = false;
+                boolean isHaveBadFeeling = false;
 
                 // set
                 user.setHunger((user.getHunger() - 2 >= 0) ? user.getHunger() - 2 : 0);
@@ -414,6 +451,9 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 if (user.getEnergy() < DEPRESS_BELOW_STATUS && user.getIsSleeping() == 0)
                     BadFeeling++;
 
+                if (BadFeeling > 0)
+                    isHaveBadFeeling = true;
+
                 // set bad feeling
                 if (user.getGoodFeeling() > 0)
                 {
@@ -435,6 +475,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                     // update value
                     user.setGoodFeeling(user.getGoodFeeling() - PetExperience.getExp(user.getHeart()));
                     user.setHeart(user.getHeart() + 1);
+                    user.setPetSkin(0); // back to the default skin....
 
                     // flags
                     isUpLevel = true;
@@ -463,6 +504,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 final boolean finalIsUpLevel = isUpLevel;
                 final boolean finalIsBadFeeling = isBadFeeling;
                 final boolean finalIsWakingUp = isWakingUp;
+                final boolean finalIsHaveBadFeeling = isHaveBadFeeling;
 
                 // run task UI
                 runOnUiThread(new Runnable() {
@@ -483,7 +525,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                         if(finalIsBadFeeling)
                             Toast.makeText(MainGameActivity.this, R.string.bad_feeling_notice, Toast.LENGTH_SHORT).show();
 
-                        if (finalIsWakingUp)
+                        if (finalIsWakingUp || finalIsHaveBadFeeling)
                             renderGame();
                     }
                 });
@@ -501,6 +543,12 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void shopPage(View view) {
+        if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
+        {
+            Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Setting.UserData = user;
         Intent i = new Intent(MainGameActivity.this, ShopPageActivity.class);
         startActivityForResult(i, REQUEST_TO_BACKGROUND);
@@ -511,7 +559,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void goToToilet(View view) {
-        if (IsToilet || IsBath || user.getIsSleeping() == 1)
+        if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
         {
             Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
             return;
@@ -529,6 +577,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.txtPetStatus.setText(R.string.toiletnow);
         binding.txtPetStatus.setVisibility(View.VISIBLE);
         binding.imgPet.setVisibility(View.GONE);
+        binding.txtBadFeeling.setVisibility(View.GONE);
         IsToilet = true;
 
         // Blink
@@ -578,7 +627,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void goToBath(View view) {
-        if (IsToilet || IsBath || user.getIsSleeping() == 1)
+        if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
         {
             Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
             return;
@@ -595,6 +644,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         binding.txtPetStatus.setText(R.string.bathnow);
         binding.txtPetStatus.setVisibility(View.VISIBLE);
         binding.imgPet.setVisibility(View.GONE);
+        binding.txtBadFeeling.setVisibility(View.GONE);
         IsBath = true;
 
         // Blink
@@ -641,14 +691,19 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
      * @param view
      */
     public void goToBed(View view) {
-        if (user.getIsSleeping() == 1)
+        if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
+        {
+            Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
             return;
+        }
 
         // set to sleep now
         binding.llMainGame.setBackgroundResource(R.drawable.background_sleep);
         binding.txtPetStatus.setText(R.string.sleeping_text);
         binding.txtPetStatus.setVisibility(View.VISIBLE);
         binding.imgPet.setVisibility(View.GONE);
+        binding.txtBadFeeling.setVisibility(View.GONE);
+        HelperFunction.SetBlinkAnimation(binding.txtPetStatus, 1000);
 
         // update status
         user.setIsSleeping(1);
@@ -668,6 +723,75 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
 
         // Just render again this activity :D
         renderGame();
+    }
+
+    /**
+     * Go out and play...
+     * @param view
+     */
+    public void goOutPlay(View view) {
+        if (IsToilet || IsBath || IsGoOut || user.getIsSleeping() == 1)
+        {
+            Toast.makeText(MainGameActivity.this, R.string.err_cantdo, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        IsGoOut = true;
+        // Change background
+        binding.llMainGame.setBackgroundResource(R.drawable.background_play);
+        binding.txtPetStatus.setText(R.string.gooutnow);
+        binding.txtPetStatus.setVisibility(View.VISIBLE);
+        binding.imgPet.setVisibility(View.GONE);
+        binding.txtBadFeeling.setVisibility(View.GONE);
+
+        // Blink
+        HelperFunction.SetBlinkAnimation(binding.txtPetStatus, 1000);
+
+        // delay task
+        Timer bathTimer = new Timer();
+        bathTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // Back to normal plzz :(
+                user.setGoodFeeling(user.getGoodFeeling() + 5);
+                user.setHygiene(user.getHygiene() - 10);
+                user.setEnergy(user.getEnergy() - 10);
+
+                // increase fun
+                user.setFun(user.getFun() + HelperFunction.RandomInt(10, 30));
+                final int Gold = HelperFunction.RandomInt(20, 200);
+                user.setGold(user.getGold() + Gold);
+
+                // if reach out, we need to fail this
+                if (user.getFun() > MAX_STATUS)
+                    user.setFun(MAX_STATUS);
+                if (user.getHygiene() <= 0)
+                    user.setHygiene(0);
+                if (user.getEnergy() <= 0)
+                    user.setEnergy(0);
+
+                // save
+                SaveUserState();
+                IsGoOut = false;
+
+                // UI
+                runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        HelperFunction.ClearAnimation(binding.txtPetStatus);
+                        binding.txtPetStatus.setVisibility(View.GONE);
+                        binding.imgPet.setVisibility(View.VISIBLE);
+
+                        MainGameActivity.this.renderGame();
+
+                        // message
+                        String str = getString(R.string.out_finish);
+                        str = str.replace("{money}", Gold + "");
+                        Toast.makeText(MainGameActivity.this, str, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }, GO_OUT_TIME);
     }
 
     /**
@@ -804,6 +928,31 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
         });
     }
 
+    /**
+     * Decrease status cheat
+     */
+    private void decreaseStatus()
+    {
+        if (Setting.STATE.equals("DEV") == false)
+            return;
+
+        binding.tlStatus.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                user.setHygiene(DEPRESS_BELOW_STATUS - 5);
+
+                // db update
+                DBAccess.UserRepo.Update(user);
+                Log.d("CHEAT_ACTIVATED", "CHEATED #3!");
+                // Update GUI
+                setCurrentStatus();
+
+                Toast.makeText(MainGameActivity.this, "Cheated a status unhappy!", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+    }
+
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
         return false;
@@ -848,4 +997,5 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
+
 }

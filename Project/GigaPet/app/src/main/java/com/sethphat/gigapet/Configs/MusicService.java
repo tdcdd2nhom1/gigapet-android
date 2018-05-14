@@ -47,7 +47,10 @@ public class MusicService {
             media.setDataSource(source_music.getFileDescriptor(), source_music.getStartOffset(), source_music.getLength());
             media.setVolume(0.6f, 0.6f);
             media.prepare();
-            media.start();
+
+            if (Setting.isIsSoundOn())
+                media.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

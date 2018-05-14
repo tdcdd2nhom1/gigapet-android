@@ -95,6 +95,7 @@
                 android:layout_margin="@dimen/sideIMGMargin"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
+                android:onClick="goOutPlay"
                 android:src="@drawable/selector_park" />
 
             <ImageButton
@@ -153,6 +154,18 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rounded_corner"
                 android:text="@string/namePet" />
+
+            <TextView
+                android:id="@+id/txtBadFeeling"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/imgPet"
+                android:background="@drawable/rounded_corner_white"
+                android:text="@string/bad_feeling_warning"
+                android:textColor="#c0392b"
+                android:visibility="gone"
+                android:padding="10dp"/>
 
             <ImageView
                 android:id="@+id/imgPet"
@@ -246,6 +259,7 @@
         </RelativeLayout>
 
         <TableLayout
+            android:id="@+id/tlStatus"
             style="@style/PetStatus"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -29,6 +29,7 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="current_background">Current Background</string>
+    <string name="current_skin">Current Skin</string>
 
 
     <!-- err mess -->
@@ -53,7 +54,9 @@
     <string name="last_time">Last time played: </string>
     <string name="welcome_mess">Welcome to GigaPet! Lets have fun together!</string>
     <string name="bathnow">Take a shower and bath right now....</string>
+    <string name="gooutnow">Go outside and playing....</string>
     <string name="bath_finish">Few, more cleaner now!!</string>
+    <string name="out_finish">So much fun. Receive: {money} golds!</string>
     <string name="toiletnow">Toilet-ing....</string>
     <string name="toilet_finish">Yay, feel more better now!</string>
     <string name="money_not_enough">You dont have enough money to buy this item!</string>
@@ -68,6 +71,7 @@
     <string name="confirm_use_title">Use this item?</string>
     <string name="confirm_use_body">Do you want to use this item?</string>
     <string name="item_out">You dont have any of this item left, please buy more!</string>
+    <string name="bad_feeling_warning">Hey master, Im having a bad feeling right now, please take care of me.</string>
 
 
     <string name="intro_title">Developers Introduction</string>

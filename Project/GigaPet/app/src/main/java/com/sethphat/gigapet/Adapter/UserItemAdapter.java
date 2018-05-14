@@ -81,6 +81,11 @@ public class UserItemAdapter extends ArrayAdapter<UserItem> {
 
         if (this.CateID == Setting.SKIN_CATEGORY)
         {
+            if (Setting.UserData.getPetSkin() == item.getShopItemObj().getBackgroundIMG())
+                view.txtPrice.setText(R.string.current_skin);
+            else
+                view.txtPrice.setText("");
+
             view.imgItem.setImageDrawable(Setting.PetImage(context, item.getShopItemObj().getTypePet(), item.getShopItemObj().getEvolution(), item.getShopItemObj().getBackgroundIMG()));
         }
         else {
