@@ -6,6 +6,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 
 import com.sethphat.gigapet.MainGameActivity;
 import com.sethphat.gigapet.Models.ShopItem;
@@ -56,6 +57,49 @@ public class HelperFunction {
         a.setRepeatMode(Animation.REVERSE);
 
         v.startAnimation(a);
+    }
+
+    public static void SlideUpAnimation(Context ct, final View v, int time)
+    {
+//        Animation slide_up = AnimationUtils.loadAnimation(ct,
+//                R.anim.slide_up);
+//        slide_up.setDuration(time);
+//        v.startAnimation(slide_up);
+        Animation slide = null;
+        slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, -5.0f);
+
+        slide.setDuration(time);
+        slide.setFillAfter(true);
+        slide.setFillEnabled(true);
+
+        v.startAnimation(slide);
+
+        slide.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                v.clearAnimation();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
+    public static void SlideDownAnimation(Context ct, View v, int time)
+    {
+        Animation slide_down = AnimationUtils.loadAnimation(ct,
+                R.anim.slide_down);
+        slide_down.setDuration(time);
+        v.startAnimation(slide_down);
     }
 
     public static void ClearAnimation(View v)

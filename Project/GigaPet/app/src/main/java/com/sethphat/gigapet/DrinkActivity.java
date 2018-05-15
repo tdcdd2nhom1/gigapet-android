@@ -108,6 +108,7 @@ public class DrinkActivity extends AppCompatActivity {
         // increase stats if exists
         Setting.UserData.setThirsty(Setting.UserData.getThirsty() + item.getShopItemObj().getRecover());
         DBAccess.UserRepo.Update(Setting.UserData);
+        adapter.notifyDataSetChanged();
 
         // Mess
         Toast.makeText(this, R.string.drink_success, Toast.LENGTH_SHORT).show();

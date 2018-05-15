@@ -322,6 +322,35 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 startActivityForResult(intent, REQUEST_TO_BACKGROUND);
             }
         });
+        binding.imgPet.setOnTouchListener(new OnSwipeTouchListener(MainGameActivity.this) {
+            @Override
+            public void onSwipeTop() {
+                //Load animation
+                HelperFunction.SlideUpAnimation(getApplicationContext(), binding.imgPet, 1000);
+            }
+
+            @Override
+            public void onDoubleClick() {
+                int random_sound = Setting.GetRandomPetSound(user.getType());
+                mediaPlayer = MediaPlayer.create(MainGameActivity.this, random_sound);
+                mediaPlayer.start();
+
+                // rotate img
+                HelperFunction.SetRotateAnimation(MainGameActivity.this, binding.imgPet, 1000);
+
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new TimerTask() {
+                            @Override
+                            public void run() {
+                                HelperFunction.ClearAnimation(binding.imgPet);
+                            }
+                        });
+                    }
+                }, 1000);
+            }
+        });
 
         // finalization render
         isRendered = true;
@@ -503,8 +532,6 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                 final boolean finalIsEvolution = isEvolution;
                 final boolean finalIsUpLevel = isUpLevel;
                 final boolean finalIsBadFeeling = isBadFeeling;
-                final boolean finalIsWakingUp = isWakingUp;
-                final boolean finalIsHaveBadFeeling = isHaveBadFeeling;
 
                 // run task UI
                 runOnUiThread(new Runnable() {
@@ -525,8 +552,7 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                         if(finalIsBadFeeling)
                             Toast.makeText(MainGameActivity.this, R.string.bad_feeling_notice, Toast.LENGTH_SHORT).show();
 
-                        if (finalIsWakingUp || finalIsHaveBadFeeling)
-                            renderGame();
+                        renderGame();
                     }
                 });
 
@@ -754,8 +780,11 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
             public void run() {
                 // Back to normal plzz :(
                 user.setGoodFeeling(user.getGoodFeeling() + 5);
-                user.setHygiene(user.getHygiene() - 10);
-                user.setEnergy(user.getEnergy() - 10);
+                user.setHygiene(user.getHygiene() - HelperFunction.RandomInt(5, 10));
+                user.setEnergy(user.getEnergy() - HelperFunction.RandomInt(5, 10));
+                user.setBladder(user.getBladder() - HelperFunction.RandomInt(5, 10));
+                user.setHunger(user.getHunger() - HelperFunction.RandomInt(5, 10));
+                user.setThirsty(user.getThirsty() - HelperFunction.RandomInt(5, 10));
 
                 // increase fun
                 user.setFun(user.getFun() + HelperFunction.RandomInt(10, 30));
@@ -767,8 +796,14 @@ public class MainGameActivity extends AppCompatActivity implements GestureDetect
                     user.setFun(MAX_STATUS);
                 if (user.getHygiene() <= 0)
                     user.setHygiene(0);
+                if (user.getHunger() <= 0)
+                    user.setHunger(0);
                 if (user.getEnergy() <= 0)
                     user.setEnergy(0);
+                if (user.getBladder() <= 0)
+                    user.setBladder(0);
+                if (user.getThirsty() <= 0)
+                    user.setThirsty(0);
 
                 // save
                 SaveUserState();

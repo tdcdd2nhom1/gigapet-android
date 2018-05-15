@@ -40,7 +40,6 @@ public class ShopPageActivity extends AppCompatActivity {
         setContentView(R.layout.shop_page_layout);
 
 
-        btnGoCategories = (ImageButton) findViewById(R.id.btnGoCategories);
         lvItem = (ListView) findViewById(R.id.lvItem);
         tvMoney = (TextView) findViewById(R.id.tvMoney);
 
@@ -64,26 +63,17 @@ public class ShopPageActivity extends AppCompatActivity {
                 //catePage(view);
                 Intent i = new Intent(ShopPageActivity.this, CategoriesActivity.class);
                 i.putExtra(IntentKey.CATEGORY_ID, listCate.get(position).getID());
-                startActivity(i);
+                startActivityForResult(i, 11);
             }
         });
 
         MusicService.PlaySong(this, 4);
     }
 
-
-    /**
-     * Start new game
-     * /**
-     * Go to Categories page
-     *
-     * @param view
-     */
-    public void catePage(View view) {
-        Intent i = new Intent(ShopPageActivity.this, CategoriesActivity.class);
-        startActivity(i);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        tvMoney.setText(Setting.UserData.getGold() + "");
     }
-
 
     /**
      * Back screen

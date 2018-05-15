@@ -29,6 +29,12 @@ public class SQLiteAccess {
         ShopItem food1 = new ShopItem(0, 1, "Apple", "A food that help your pet less hungry", 50, 0, 0, 0, 5);
         food1.setImage("apple.png");
         DBAccess.ShopItem.Insert(food1);
+        ShopItem food2 = new ShopItem(0, 1, "Banana", "Delicious banana from Soraka", 80, 0, 0, 0, 15);
+        food2.setImage("banana.png");
+        DBAccess.ShopItem.Insert(food2);
+        ShopItem food3 = new ShopItem(0, 1, "Sandwich", "Wow, it's look so good", 150, 0, 0, 0, 30);
+        food3.setImage("sandwich.png");
+        DBAccess.ShopItem.Insert(food3);
 
         ShopItem background1 = new ShopItem(0, 4, "Grass", "A peacefully grass scene", 40, 2, 0, 0, 0);
         background1.setImage("2.png");

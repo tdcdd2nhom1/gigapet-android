@@ -55,7 +55,6 @@ public class ItemAdapter extends ArrayAdapter<Category> {
             holder.imgIcon = (ImageView) convertView.findViewById(R.id.imgIcon);
             holder.tvName = (TextView) convertView.findViewById(R.id.tvName);
             holder.tvTotal = (TextView) convertView.findViewById(R.id.tvTotal);
-            holder.btnGoCategories = (ImageButton) convertView.findViewById(R.id.btnGoCategories);
 
             convertView.setTag(holder);
         }else {
@@ -78,6 +77,5 @@ public class ItemAdapter extends ArrayAdapter<Category> {
         ImageView imgIcon;
         TextView tvName;
         TextView tvTotal;
-        ImageButton btnGoCategories;
     }
 }

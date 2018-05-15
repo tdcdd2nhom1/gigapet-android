@@ -108,6 +108,7 @@ public class EatActivity extends AppCompatActivity {
         // increase stats if exists
         Setting.UserData.setHunger(Setting.UserData.getHunger() + item.getShopItemObj().getRecover());
         DBAccess.UserRepo.Update(Setting.UserData);
+        adapter.notifyDataSetChanged();
 
         // Mess
         Toast.makeText(this, R.string.eat_success, Toast.LENGTH_SHORT).show();

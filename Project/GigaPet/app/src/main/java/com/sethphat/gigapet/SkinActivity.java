@@ -38,7 +38,7 @@ public class SkinActivity extends AppCompatActivity {
         while (iter.hasNext())
         {
             UserItem item = iter.next();
-            if (item.getShopItemObj() != null)
+            if (item.getShopItemObj() != null && item.getShopItemObj().getEvolution() == Setting.UserData.getEvolution())
                 continue;
 
             // get shop item
@@ -117,9 +117,9 @@ public class SkinActivity extends AppCompatActivity {
 
     private void initDefaultSkin()
     {
-        ShopItem default_level1 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 1", "Default skin in evolution 1", 0, 0, 1, 1, 0);
-        ShopItem default_level2 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 2", "Default skin in evolution 1", 0, 0, 1, 2, 0);
-        ShopItem default_level3 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 3", "Default skin in evolution 1", 0, 0, 1, 3, 0);
+        ShopItem default_level1 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 1", "Default skin in evolution 1", 0, 0, Setting.UserData.getType(), 1, 0);
+        ShopItem default_level2 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 2", "Default skin in evolution 1", 0, 0, Setting.UserData.getType(), 2, 0);
+        ShopItem default_level3 = new ShopItem(0, Setting.SKIN_CATEGORY, "Default Evolution 3", "Default skin in evolution 1", 0, 0, Setting.UserData.getType(), 3, 0);
 
         if (Setting.UserData.getEvolution() <= 1)
             items.add(new UserItem(Setting.UserData.getID(), 0,0, default_level1));

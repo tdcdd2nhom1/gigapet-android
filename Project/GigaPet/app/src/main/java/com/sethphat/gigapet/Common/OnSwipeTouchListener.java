@@ -23,6 +23,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
         return gestureDetector.onTouchEvent(event);
     }
 
+
     private final class GestureListener extends SimpleOnGestureListener {
 
         private static final int SWIPE_THRESHOLD = 100;
@@ -31,6 +32,12 @@ public class OnSwipeTouchListener implements OnTouchListener {
         @Override
         public boolean onDown(MotionEvent e) {
             return true;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            onDoubleClick();
+            return super.onDoubleTap(e);
         }
 
         @Override
@@ -62,6 +69,9 @@ public class OnSwipeTouchListener implements OnTouchListener {
             }
             return result;
         }
+    }
+
+    public void onDoubleClick() {
     }
 
     public void onSwipeRight() {

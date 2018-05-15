@@ -132,4 +132,10 @@ public class CategoriesActivity extends AppCompatActivity {
         onBackPressed();
     }
 
+    @Override
+    public void onBackPressed() {
+        // set final
+        setResult(69);
+        finish();
+    }
 }
